@@ -1,0 +1,198 @@
+/* C:\Users\Melody\Documents\haliberrycake\frontend\src\index.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Brand CSS Custom Properties ───────────────────────────────── */
+:root {
+  --peach:       #F8A974;
+  --apricot:     #FBD6B2;
+  --blush:       #F2B6B8;
+  --golden:      #F6E2B5;
+  --cream:       #F2E8E1;
+  --cream-white: #FDF7F2;
+
+  --text-primary:   #2C1810;
+  --text-secondary: #6B4232;
+  --text-muted:     #A0795A;
+  --text-light:     #C4A592;
+
+  --shadow-luxury: 0 8px 40px rgba(248, 169, 116, 0.12), 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-luxury-lg: 0 20px 60px rgba(248, 169, 116, 0.18), 0 4px 20px rgba(0,0,0,0.08);
+
+  --transition-base: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Base Resets ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-primary);
+  background-color: #FFFFFF;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography Utilities ───────────────────────────────────────── */
+.font-serif { font-family: 'Cormorant Garamond', serif; }
+
+h1, h2, h3, .heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Luxury Link Style ──────────────────────────────────────────── */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-base);
+}
+
+/* ─── Scrollbar Styling ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--peach);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E8895A;
+}
+
+/* ─── Selection Color ────────────────────────────────────────────── */
+::selection {
+  background-color: var(--blush);
+  color: var(--text-primary);
+}
+
+/* ─── Component Layer ────────────────────────────────────────────── */
+@layer components {
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-medium text-sm tracking-wide;
+    background: var(--peach);
+    color: white;
+    transition: var(--transition-base);
+    box-shadow: 0 4px 20px rgba(248,169,116,0.35);
+  }
+  .btn-primary:hover {
+    background: #E8895A;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(248,169,116,0.45);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-medium text-sm tracking-wide border;
+    border-color: var(--peach);
+    color: var(--text-secondary);
+    background: transparent;
+    transition: var(--transition-base);
+  }
+  .btn-outline:hover {
+    background: var(--apricot);
+    border-color: var(--peach);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-5 py-3 rounded-full font-sans font-medium text-sm tracking-wide;
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    transition: var(--transition-base);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.9);
+  }
+
+  /* Section Headings */
+  .section-eyebrow {
+    @apply font-sans text-xs font-medium tracking-[0.2em] uppercase;
+    color: var(--peach);
+  }
+
+  .section-title {
+    @apply font-serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .section-subtitle {
+    @apply font-sans font-light;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Cards */
+  .card-luxury {
+    background: white;
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow-luxury);
+    transition: var(--transition-base);
+    overflow: hidden;
+  }
+  .card-luxury:hover {
+    box-shadow: var(--shadow-luxury-lg);
+    transform: translateY(-4px);
+  }
+
+  /* Gradient Backgrounds */
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, #FDF7F2 0%, #FBD6B2 40%, #F2B6B8 100%);
+  }
+  .bg-cream-section {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F2E8E1 100%);
+  }
+
+  /* Decorative Divider */
+  .divider-ornament::before {
+    content: '✦';
+    color: var(--peach);
+    font-size: 0.75rem;
+    display: block;
+    text-align: center;
+  }
+}
+
+/* ─── Utility Layer ──────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-gradient {
+    background: linear-gradient(135deg, #F8A974, #F2B6B8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mask-fade-bottom {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
