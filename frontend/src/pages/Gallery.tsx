@@ -1,197 +1,128 @@
-// C:\Users\Melody\Documents\haliberrycake\frontend\src\pages\Contact.tsx
 import { motion } from 'framer-motion'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useMutation } from '@tanstack/react-query'
-import { Send, CheckCircle, Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
-import { inquiryApi } from '@/lib/api'
-import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
+import { Image as LucideImage, Camera, Heart } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { fadeUp, staggerContainer } from '@/lib/animations'
+import { galleryApi } from '@/lib/api'
+import type { GalleryImage } from '@/lib/api'
+import CTABanner from '@/components/home/CTABanner'
 
-const schema = z.object({
-  name:         z.string().min(2, 'Please enter your name'),
-  email:        z.string().email('Please enter a valid email address'),
-  phone:        z.string().optional(),
-  service_type: z.string().min(1, 'Please select a service'),
-  message:      z.string().min(15, 'Please give us a little more detail (min 15 characters)'),
-  event_date:   z.string().optional(),
-  budget_range: z.string().optional(),
-})
-type FormValues = z.infer<typeof schema>
-
-const SERVICE_OPTIONS = [
-  { value:'wedding_cake',   label:'Wedding Cake' },
-  { value:'birthday_cake',  label:'Birthday Cake' },
-  { value:'cupcakes',       label:'Cupcakes' },
-  { value:'dessert_box',    label:'Dessert Box' },
-  { value:'luxury_treats',  label:'Luxury Treats' },
-  { value:'cake_class',     label:'Baking Class' },
-  { value:'cic_programme',  label:'Haliberry CIC Programme' },
-  { value:'general',        label:'General Enquiry' },
-]
-const BUDGET_OPTIONS = ['Under £100','£100–£250','£250–£500','£500–£1,000','£1,000+','Let\'s discuss']
-
-export default function Contact() {
-  const { register, handleSubmit, reset, formState:{ errors } } = useForm<FormValues>({ resolver:zodResolver(schema) })
-  const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (data: FormValues) => inquiryApi.submit(data),
-    onSuccess: () => reset(),
+export default function Gallery() {
+  const { data: images = [], isLoading } = useQuery<GalleryImage[]>({
+    queryKey: ['gallery'],
+    queryFn: async () => { const { data } = await galleryApi.list(); return data },
+    staleTime: 10 * 60 * 1000,
   })
-
-  const inputBase = "w-full px-4 py-3 rounded-xl font-sans text-sm outline-none transition-colors"
-  const inputStyle = { background:'#FDF7F2', color:'var(--text-primary)' }
-  const fieldCls = (err?: {message?:string}) =>
-    `${inputBase} border focus:border-[var(--peach)] ${err ? 'border-red-400' : 'border-[#E0D0C5]'}`
 
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden"
-        style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
+      <section className="pt-32 pb-20 relative overflow-hidden"
+        style={{ background: 'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
+        <div className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #F2B6B8, transparent 65%)' }}/>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
-            <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Get in Touch</motion.span>
+            <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color: 'var(--peach)' }}>Our Work</motion.span>
             <motion.h1 variants={fadeUp} className="font-serif font-semibold text-white"
-              style={{ fontSize:'clamp(2.5rem,6vw,4.5rem)', lineHeight:'1.08' }}>
-              Let's Create Something <em className="not-italic" style={{ color:'var(--peach)' }}>Together</em>
+              style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)', lineHeight: '1.08' }}>
+              Gallery<br/><em className="not-italic" style={{ color: 'var(--peach)' }}>Of Creations</em>
             </motion.h1>
-            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color:'rgba(255,255,255,0.65)', fontSize:'1.05rem' }}>
-              Whether it's a wedding cake, a class booking, or a general hello — we'd love to hear from you.
+            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem' }}>
+              A showcase of our custom cakes, baking classes, and community moments.
             </motion.p>
           </motion.div>
         </div>
         <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg"
-          style={{ display:'block',width:'100%',position:'absolute',bottom:0 }}>
+          style={{ display: 'block', width: '100%', position: 'absolute', bottom: 0 }}>
           <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="white"/>
         </svg>
       </section>
 
-      <section className="py-20" style={{ background:'linear-gradient(180deg,white 0%,#FDF7F2 100%)' }}>
+      <section className="py-20" style={{ background: 'linear-gradient(180deg,#FDF7F2 0%,white 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-14">
-
-            {/* Left — Contact info */}
-            <motion.div className="lg:col-span-2 space-y-8"
-              variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }}>
-              <motion.div variants={fadeLeft} className="space-y-2">
-                <span className="section-eyebrow block">Contact Us</span>
-                <h2 className="section-title">We'd Love to<br/><em className="not-italic" style={{ color:'var(--peach)' }}>Hear From You</em></h2>
-                <p className="font-sans font-light leading-relaxed" style={{ color:'var(--text-secondary)' }}>
-                  Fill in the form and we'll respond within 24 hours. For urgent enquiries, WhatsApp or call us directly.
-                </p>
-              </motion.div>
-
-              {[
-                { icon:<Phone size={18}/>,   label:'Phone / WhatsApp', value:'+44 (0)7XXX XXX XXX', href:'https://wa.me/447XXXXXXXXX' },
-                { icon:<Mail size={18}/>,    label:'Email',            value:'hello@haliberrycake.co.uk', href:'mailto:hello@haliberrycake.co.uk' },
-                { icon:<MapPin size={18}/>,  label:'Location',         value:'London, United Kingdom', href:undefined },
-                { icon:<MessageCircle size={18}/>, label:'Instagram',  value:'@haliberrycake', href:'https://instagram.com/haliberrycake' },
-              ].map(({ icon, label, value, href })=>(
-                <motion.div key={label} variants={fadeLeft} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background:'var(--apricot)', color:'var(--peach)' }}>{icon}</div>
-                  <div>
-                    <p className="font-sans text-xs font-medium tracking-widest uppercase mb-0.5" style={{ color:'var(--text-muted)' }}>{label}</p>
-                    {href ? (
-                      <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                        className="font-sans text-sm font-medium hover:text-[var(--peach)] transition-colors" style={{ color:'var(--text-primary)' }}>{value}</a>
-                    ) : (
-                      <p className="font-sans text-sm" style={{ color:'var(--text-primary)' }}>{value}</p>
-                    )}
+          <motion.div className="text-center max-w-xl mx-auto mb-14" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.span variants={fadeUp} className="section-eyebrow block mb-3">Featured</motion.span>
+            <motion.h2 variants={fadeUp} className="section-title">Recent <em className="not-italic" style={{ color: 'var(--peach)' }}>Work</em></motion.h2>
+          </motion.div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="aspect-[4/3] bg-[var(--cream)] animate-pulse rounded-xl" />
+              ))}
+            </div>
+          ) : images.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-5xl mb-5">📸</p>
+              <p className="font-serif text-2xl mb-2" style={{ color: 'var(--text-primary)' }}>No gallery items yet</p>
+              <p className="font-sans text-sm mb-6" style={{ color: 'var(--text-muted)' }}>New additions coming soon!</p>
+            </div>
+          ) : (
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8"
+              variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              {images.map((image) => (
+                <motion.div key={image.id} variants={fadeUp} className="relative grouped">
+                  <div className="aspect-[4/3] w-full rounded-xl overflow-hidden">
+                    <img
+                      src={image.url}
+                      alt={image.title || 'Haliberry Cake Creation'}
+                      className="w-full h-full object-cover transition-transform duration-500"
+                      onMouseEnter={(e) => {
+                        const img = e.currentTarget as HTMLImageElement;
+                        img.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        const img = e.currentTarget as HTMLImageElement;
+                        img.style.transform = 'scale(1)';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="text-center">
+                        <Heart size={24} className="mb-2" style={{ color: 'var(--peach)' }}/>
+                        <h3 className="font-serif font-semibold text-white mb-1" style={{ fontSize: '1.15rem' }}>
+                          {image.title || 'Creation'}
+                        </h3>
+                        <p className="font-sans text-sm text-white/80">{image.category || ''}</p>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}
+            </motion.div>
+          )}
+        </div>
+      </section>
 
-              {/* Google Maps embed */}
-              <motion.div variants={fadeLeft} className="rounded-2xl overflow-hidden shadow-luxury-sm" style={{ height:'220px' }}>
-                <iframe
-                  title="Haliberry Cake London"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317715.70559289995!2d-0.38197022952563646!3d51.52852978784506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
-                  width="100%" height="220" style={{ border:0 }} allowFullScreen loading="lazy"/>
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div className="text-center" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.span variants={fadeUp} className="section-eyebrow block">Categories</motion.span>
+            <motion.h2 variants={fadeUp} className="section-title">Explore <em className="not-italic" style={{ color: 'var(--peach)' }}>Our Specialties</em></motion.h2>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
+            variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            {[
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'Wedding Cakes', count: 24 },
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'Birthday Cakes', count: 31 },
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'Cupcakes & Treats', count: 18 },
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'Baking Classes', count: 12 },
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'CIC Workshops', count: 15 },
+              { icon: <LucideImage className="w-8 h-8"/>, label: 'Corporate Events', count: 8 }
+            ].map(({ icon, label, count }) => (
+              <motion.div key={label} variants={fadeUp} className="flex items-center gap-3 p-6 rounded-xl border"
+                style={{ background: 'var(--cream)', border: '1px solid var(--apricot)' }}>
+                <div className="flex-shrink-0">
+                  {icon}
+                </div>
+                <div>
+                  <h3 className="font-serif font-semibold" style={{ color: 'var(--text-primary)', fontSize: '1.1rem' }}>{label}</h3>
+                  <p className="font-sans text-sm text-muted-foreground">{count} items</p>
+                </div>
               </motion.div>
-            </motion.div>
-
-            {/* Right — Form */}
-            <motion.div className="lg:col-span-3"
-              variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once:true }}>
-              <div className="rounded-[2rem] p-8 lg:p-10 shadow-luxury" style={{ background:'white', border:'1px solid var(--cream)' }}>
-                {isSuccess ? (
-                  <motion.div className="text-center py-12" initial={{ opacity:0, scale:0.9 }} animate={{ opacity:1, scale:1 }}>
-                    <CheckCircle size={56} style={{ color:'var(--peach)' }} className="mx-auto mb-5"/>
-                    <h3 className="font-serif text-2xl mb-3" style={{ color:'var(--text-primary)' }}>Message Received!</h3>
-                    <p className="font-sans text-sm leading-relaxed" style={{ color:'var(--text-secondary)' }}>
-                      Thank you for getting in touch. We'll respond within 24 hours.<br/>
-                      In the meantime, follow us on Instagram for daily inspiration 🎂
-                    </p>
-                  </motion.div>
-                ) : (
-                  <form onSubmit={handleSubmit(d => mutate(d))} className="space-y-5" noValidate>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Your Name *</label>
-                        <input {...register('name')} placeholder="Jane Smith" className={fieldCls(errors.name)} style={inputStyle}/>
-                        {errors.name && <p className="font-sans text-xs mt-1 text-red-500">{errors.name.message}</p>}
-                      </div>
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Email Address *</label>
-                        <input {...register('email')} type="email" placeholder="jane@example.com" className={fieldCls(errors.email)} style={inputStyle}/>
-                        {errors.email && <p className="font-sans text-xs mt-1 text-red-500">{errors.email.message}</p>}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Phone (optional)</label>
-                        <input {...register('phone')} type="tel" placeholder="+44 7XXX XXX XXX" className={fieldCls()} style={inputStyle}/>
-                      </div>
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Service Type *</label>
-                        <select {...register('service_type')} className={fieldCls(errors.service_type)} style={inputStyle}>
-                          <option value="">Select a service…</option>
-                          {SERVICE_OPTIONS.map(o=><option key={o.value} value={o.value}>{o.label}</option>)}
-                        </select>
-                        {errors.service_type && <p className="font-sans text-xs mt-1 text-red-500">{errors.service_type.message}</p>}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Event Date (if applicable)</label>
-                        <input {...register('event_date')} type="date" className={fieldCls()} style={inputStyle}/>
-                      </div>
-                      <div>
-                        <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Approximate Budget</label>
-                        <select {...register('budget_range')} className={fieldCls()} style={inputStyle}>
-                          <option value="">Select a range…</option>
-                          {BUDGET_OPTIONS.map(o=><option key={o} value={o}>{o}</option>)}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="font-sans text-xs font-medium mb-1.5 block" style={{ color:'var(--text-secondary)' }}>Your Message *</label>
-                      <textarea {...register('message')} rows={5}
-                        className={fieldCls(errors.message)}
-                        style={{ ...inputStyle, resize:'none' }}
-                        placeholder="Tell us about your event, cake design ideas, dietary requirements, number of portions…"/>
-                      {errors.message && <p className="font-sans text-xs mt-1 text-red-500">{errors.message.message}</p>}
-                    </div>
-
-                    <button type="submit" disabled={isPending} className="btn-primary w-full justify-center text-sm py-4">
-                      {isPending ? 'Sending…' : <><Send size={16}/> Send Message</>}
-                    </button>
-
-                    <p className="font-sans text-xs text-center" style={{ color:'var(--text-muted)' }}>
-                      We respond within 24 hours. Your details are kept private and never shared.
-                    </p>
-                  </form>
-                )}
-              </div>
-            </motion.div>
-
+            ))}
           </div>
         </div>
       </section>
+
+      <CTABanner/>
     </>
   )
 }

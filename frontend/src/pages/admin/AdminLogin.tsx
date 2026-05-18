@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
@@ -17,6 +17,8 @@ type FormValues = z.infer<typeof schema>
 
 export default function AdminLogin() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/admin'
   const [showPw, setShowPw] = useState(false)
   const { register, handleSubmit, formState:{ errors } } = useForm<FormValues>({ resolver:zodResolver(schema) })
 
@@ -24,7 +26,7 @@ export default function AdminLogin() {
     mutationFn: ({ email, password }: FormValues) => authApi.login(email, password),
     onSuccess: (res) => {
       localStorage.setItem('haliberry_admin_token', res.data.access_token)
-      navigate('/admin')
+      navigate(from, { replace: true })
     },
   })
 

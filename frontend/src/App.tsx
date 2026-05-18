@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from '@/components/layout/Layout'
 import PageLoader from '@/components/ui/PageLoader'
+import ProtectedRoute from '@/components/admin/ProtectedRoute'
 
 // Lazy-loaded pages for performance
 const Home        = lazy(() => import('@/pages/Home'))
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Public site routes wrapped in shared Layout */}
+        {/* ── Public site routes ── */}
         <Route element={<Layout />}>
           <Route path="/"             element={<Home />} />
           <Route path="/about"        element={<About />} />
@@ -32,9 +33,18 @@ export default function App() {
           <Route path="/contact"      element={<Contact />} />
         </Route>
 
-        {/* Admin routes — no Layout wrapper */}
-        <Route path="/admin/login"     element={<AdminLogin />} />
-        <Route path="/admin/*"         element={<AdminDash />} />
+        {/* ── Admin login (no Layout, no auth guard) ── */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* ── Admin dashboard (protected, no Layout) ── */}
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute>
+              <AdminDash />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Suspense>
   )
