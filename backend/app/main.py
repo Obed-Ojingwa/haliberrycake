@@ -1,29 +1,111 @@
+# C:\Users\Melody\Documents\haliberrycake\backend\app\main.py
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from contextlib import asynccontextmanager
+
 from app.core.config import settings
-from app.api import auth, cake_classes, cic, gallery, inquiries, products, testimonials
+from app.database.session import engine, Base
+from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic
 
-app = FastAPI(title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json")
+LOCAL_UPLOAD_DIR = Path("/tmp/haliberry-uploads")
 
-# Set all CORS enabled origins
-if settings.BACKEND_CORS_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create tables on startup in dev (use Alembic in production)
+    Base.metadata.create_all(bind=engine)
+    # Ensure local upload dir exists in dev
+    if settings.app_env != "production":
+        LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    yield
+
+
+limiter = Limiter(key_func=get_remote_address)
+
+app = FastAPI(
+    title="Haliberry Cake API",
+    version="1.0.0",
+    description="Backend API for Haliberry Cake luxury bakery platform.",
+    lifespan=lifespan,
+    # Swagger only available in debug/dev mode
+    docs_url="/api/docs"  if settings.app_env != "production" else None,
+    redoc_url="/api/redoc" if settings.app_env != "production" else None,
+)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# ── CORS ──────────────────────────────────────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ── Serve local uploads in dev mode ───────────────────────────────
+if settings.app_env != "production":
+    LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    app.mount(
+        "/static/uploads",
+        StaticFiles(directory=str(LOCAL_UPLOAD_DIR)),
+        name="uploads",
     )
 
-# Include routers
-app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
-app.include_router(cake_classes.router, prefix=f"{settings.API_V1_STR}/cake-classes", tags=["cake-classes"])
-app.include_router(cic.router, prefix=f"{settings.API_V1_STR}/cic", tags=["cic"])
-app.include_router(gallery.router, prefix=f"{settings.API_V1_STR}/gallery", tags=["gallery"])
-app.include_router(inquiries.router, prefix=f"{settings.API_V1_STR}/inquiries", tags=["inquiries"])
-app.include_router(products.router, prefix=f"{settings.API_V1_STR}/products", tags=["products"])
-app.include_router(testimonials.router, prefix=f"{settings.API_V1_STR}/testimonials", tags=["testimonials"])
+# ── Routers ───────────────────────────────────────────────────────
+API_PREFIX = "/api/v1"
 
-@app.get("/")
-def root():
-    return {"message": "Welcome to HaliberryCake API"}
+app.include_router(auth.router,         prefix=API_PREFIX)
+app.include_router(products.router,     prefix=API_PREFIX)
+app.include_router(cake_classes.router, prefix=API_PREFIX)
+app.include_router(gallery.router,      prefix=API_PREFIX)
+app.include_router(testimonials.router, prefix=API_PREFIX)
+app.include_router(inquiries.router,    prefix=API_PREFIX)
+app.include_router(cic.router,          prefix=API_PREFIX)
+
+
+# ── Health check ──────────────────────────────────────────────────
+@app.get("/health", tags=["Health"])
+def health():
+    return {
+        "status": "ok",
+        "service": "Haliberry Cake API",
+        "environment": settings.app_env,
+    }
+
+
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from app.core.config import settings
+# from app.api import auth, cake_classes, cic, gallery, inquiries, products, testimonials
+
+# app = FastAPI(title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json")
+
+# # Set all CORS enabled origins
+# if settings.BACKEND_CORS_ORIGINS:
+#     app.add_middleware(
+#         CORSMiddleware,
+#         allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+#         allow_credentials=True,
+#         allow_methods=["*"],
+#         allow_headers=["*"],
+#     )
+
+# # Include routers
+# app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
+# app.include_router(cake_classes.router, prefix=f"{settings.API_V1_STR}/cake-classes", tags=["cake-classes"])
+# app.include_router(cic.router, prefix=f"{settings.API_V1_STR}/cic", tags=["cic"])
+# app.include_router(gallery.router, prefix=f"{settings.API_V1_STR}/gallery", tags=["gallery"])
+# app.include_router(inquiries.router, prefix=f"{settings.API_V1_STR}/inquiries", tags=["inquiries"])
+# app.include_router(products.router, prefix=f"{settings.API_V1_STR}/products", tags=["products"])
+# app.include_router(testimonials.router, prefix=f"{settings.API_V1_STR}/testimonials", tags=["testimonials"])
+
+# @app.get("/")
+# def root():
+#     return {"message": "Welcome to HaliberryCake API"}

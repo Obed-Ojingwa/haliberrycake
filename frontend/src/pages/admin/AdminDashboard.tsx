@@ -243,14 +243,6 @@ export default function AdminDashboard() {
     </div>
   )
 }
-import { motion } from 'framer-motion'
-import { useQuery } from '@tanstack/react-query'
-import {
-  LayoutDashboard, Package, GalleryHorizontal, Star,
-  MessageCircle, BookOpen, Heart, LogOut, Menu, X,
-  TrendingUp, Users, Eye, Mail,
-} from 'lucide-react'
-import { api } from '@/lib/api'
 
 // ── Sidebar nav links ─────────────────────────────────────────────
 const NAV = [
