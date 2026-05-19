@@ -32,7 +32,8 @@ const WHY_ITEMS = [
 ]
 
 function ClassCard({ cls, onBook }: { cls: CakeClass; onBook: (c: CakeClass) => void }) {
-  const available = cls.slots_remaining ?? cls.slots ?? 0
+  // Backend returns available_slots; fall back chain handles all field name variants
+  const available = cls.available_slots ?? cls.slots_remaining ?? (cls.total_slots ?? 0) - (cls.booked_slots ?? 0)
   const isFull = available <= 0
   const levelColour = LEVEL_COLOURS[cls.level ?? 'beginner'] ?? 'var(--peach)'
   return (
@@ -48,7 +49,7 @@ function ClassCard({ cls, onBook }: { cls: CakeClass; onBook: (c: CakeClass) => 
         <div className="space-y-2 mb-5 pt-4" style={{ borderTop: '1px solid var(--cream)' }}>
           {[
             { icon: <Calendar size={14}/>, text: new Date(cls.class_date).toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' }) },
-            { icon: <Clock size={14}/>,    text: `${cls.duration} hours` },
+            { icon: <Clock size={14}/>,    text: `${cls.duration_hours ?? cls.duration} hours` },
             { icon: <Users size={14}/>,    text: isFull ? 'Fully Booked' : `${available} place${available !== 1 ? 's' : ''} remaining` },
           ].map(({ icon, text }) => (
             <div key={text} className="flex items-center gap-2 font-sans text-sm"

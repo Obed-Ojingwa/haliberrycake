@@ -5,7 +5,7 @@ import { heroTextReveal } from '@/lib/animations'
 export default function AboutHero() {
   return (
     <section
-      className="relative min-h-[calc(70vh-72px)] flex items-end overflow-hidden pt-[calc(72px+1rem)]"
+      className="relative min-h-[70vh] flex items-end overflow-hidden"
       style={{ background: 'linear-gradient(145deg, #2C1810 0%, #52200E 50%, #7A3618 100%)' }}
     >
       {/* Ambient top-right orb */}

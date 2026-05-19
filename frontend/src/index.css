@@ -28,10 +28,22 @@
 }
 
 /* ─── Base Resets ────────────────────────────────────────────────── */
-*, *::before, *::after {
+html, body, #root, #root > * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html, body, #root {
+  height: 100% !important;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-primary);
+  background-color: #FFFFFF;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
 html {
