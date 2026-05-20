@@ -14,5 +14,9 @@ dist/
 coverage/
 *.cache
 Readme.md
-
+frontend/node_modules/
+frontend/dist/
+backend/venv/
+frontend/.env.local
+backend/.env
 
