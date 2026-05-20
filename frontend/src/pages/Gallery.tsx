@@ -20,13 +20,13 @@ export default function Gallery() {
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #F2B6B8, transparent 65%)' }}/>
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
-            <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color: 'var(--peach)' }}>Our Work</motion.span>
-            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-white"
+          <motion.div initial="hidden" animate="visible" className="space-y-4">
+            <motion.span className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color: 'var(--peach)' }}>Our Work</motion.span>
+            <motion.h1 className="font-serif font-semibold text-white"
               style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)', lineHeight: '1.08' }}>
               Gallery<br/><em className="not-italic" style={{ color: 'var(--peach)' }}>Of Creations</em>
             </motion.h1>
-            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem' }}>
+            <motion.p className="font-sans font-light" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem' }}>
               A showcase of our custom cakes, baking classes, and community moments.
             </motion.p>
           </motion.div>
@@ -39,9 +39,9 @@ export default function Gallery() {
 
       <section className="py-20" style={{ background: 'linear-gradient(180deg,#FDF7F2 0%,white 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center max-w-xl mx-auto mb-14" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <motion.span variants={fadeUp} className="section-eyebrow block mb-3">Featured</motion.span>
-            <motion.h2 variants={fadeUp} className="section-title">Recent <em className="not-italic" style={{ color: 'var(--peach)' }}>Work</em></motion.h2>
+          <motion.div className="text-center max-w-xl mx-auto mb-14" initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.span className="section-eyebrow block mb-3">Featured</motion.span>
+            <motion.h2 className="section-title">Recent <em className="not-italic" style={{ color: 'var(--peach)' }}>Work</em></motion.h2>
           </motion.div>
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -57,9 +57,9 @@ export default function Gallery() {
             </div>
           ) : (
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8"
-              variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               {images.map((image) => (
-                <motion.div key={image.id} variants={fadeUp} className="relative grouped">
+                <motion.div key={image.id} className="relative grouped">
                   <div className="aspect-[4/3] w-full rounded-xl overflow-hidden">
                     <img
                       src={image.url}
@@ -93,12 +93,12 @@ export default function Gallery() {
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <motion.span variants={fadeUp} className="section-eyebrow block">Categories</motion.span>
-            <motion.h2 variants={fadeUp} className="section-title">Explore <em className="not-italic" style={{ color: 'var(--peach)' }}>Our Specialties</em></motion.h2>
+          <motion.div className="text-center" initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.span className="section-eyebrow block">Categories</motion.span>
+            <motion.h2 className="section-title">Explore <em className="not-italic" style={{ color: 'var(--peach)' }}>Our Specialties</em></motion.h2>
           </motion.div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
-            variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <motion.div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
+            initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             {[
               { icon: <LucideImage className="w-8 h-8"/>, label: 'Wedding Cakes', count: 24 },
               { icon: <LucideImage className="w-8 h-8"/>, label: 'Birthday Cakes', count: 31 },
@@ -107,7 +107,7 @@ export default function Gallery() {
               { icon: <LucideImage className="w-8 h-8"/>, label: 'CIC Workshops', count: 15 },
               { icon: <LucideImage className="w-8 h-8"/>, label: 'Corporate Events', count: 8 }
             ].map(({ icon, label, count }) => (
-              <motion.div key={label} variants={fadeUp} className="flex items-center gap-3 p-6 rounded-xl border"
+              <motion.div key={label} className="flex items-center gap-3 p-6 rounded-xl border"
                 style={{ background: 'var(--cream)', border: '1px solid var(--apricot)' }}>
                 <div className="flex-shrink-0">
                   {icon}
@@ -118,7 +118,7 @@ export default function Gallery() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

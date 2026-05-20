@@ -1,8 +1,17 @@
 // C:\Users\Melody\Documents\haliberrycake\frontend\src\lib\api.ts
 import axios from 'axios'
 
+export type GalleryImage = {
+  id: string
+  url: string
+  title?: string
+  category?: string
+}
+
+const baseURL = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:8000'
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:8000',
+  baseURL,
   headers: { 'Content-Type': 'application/json' },
   timeout: 15_000,
 })
