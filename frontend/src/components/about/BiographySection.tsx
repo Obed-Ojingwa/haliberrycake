@@ -24,7 +24,7 @@ export default function BiographySection() {
               <div className="flex items-center justify-center h-full flex-col gap-3 text-center p-10">
                 <span className="text-8xl">👩🏾‍🍳</span>
                 <p className="font-serif italic text-lg" style={{ color: 'var(--text-muted)' }}>
-                  Halimot — portrait photo
+                  Halimot, portrait photo
                 </p>
               </div>
             </div>
@@ -81,11 +81,11 @@ export default function BiographySection() {
               late at night, practising on weekend mornings, gifting cakes to neighbours who
               soon became her first loyal customers.`,
 
-              `In 2020, she took the leap — launching Haliberry Cake from her home kitchen
+              `In 2020, she took the leap, launching Haliberry Cake from her home kitchen
               in London with nothing but her talent, her resolve, and an Instagram page.
               Within months, enquiries were flooding in. Wedding commissions. Birthday
               masterpieces. Corporate events. The brand grew not through advertising, but
-              through word of mouth — because every cake Halimot made carried something
+              through word of mouth, because every cake Halimot made carried something
               intangible: intention.`,
 
               `Today, Haliberry Cake is a celebrated luxury bakery brand serving clients

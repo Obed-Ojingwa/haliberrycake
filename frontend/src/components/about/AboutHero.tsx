@@ -45,7 +45,7 @@ export default function AboutHero() {
           style={{ fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', color: 'rgba(255,255,255,0.65)', lineHeight: '1.75' }}
         >
           Baker. Entrepreneur. Community champion. A woman who turned the hardest
-          chapters of her life into the most beautiful creations — and built a luxury
+          chapters of her life into the most beautiful creations, and built a luxury
           brand rooted in healing, love, and artistry.
         </motion.p>
       </div>

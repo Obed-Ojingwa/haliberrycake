@@ -11,7 +11,7 @@ import CTABanner from '@/components/home/CTABanner'
 const ACCENT_COLOURS = ['var(--peach)','var(--blush)','var(--golden)','var(--apricot)']
 
 const STATIC_REVIEWS: Testimonial[] = [
-  { id:1, customer_name:'Amara Johnson',  message:'The most breathtaking wedding cake. Every guest was stunned before they even tasted it — and the taste was pure perfection.', image_url:null, rating:5, created_at:'' },
+  { id:1, customer_name:'Amara Johnson',  message:'The most breathtaking wedding cake. Every guest was stunned before they even tasted it, and the taste was pure perfection.', image_url:null, rating:5, created_at:'' },
   { id:2, customer_name:'Priya Sharma',   message:'I ordered a custom 60th birthday cake and Haliberry absolutely delivered. The artistry and flavour were first class.', image_url:null, rating:5, created_at:'' },
   { id:3, customer_name:'Rachel Thompson',message:'We\'ve used Haliberry for three corporate events. Consistently stunning, always on time. Our guests are always wowed.', image_url:null, rating:5, created_at:'' },
   { id:4, customer_name:'Fatima Al-Hassan',message:'The baking class changed my life. Halimot teaches with patience, warmth and expertise. I went from knowing nothing to decorating cakes I\'m proud of.', image_url:null, rating:5, created_at:'' },

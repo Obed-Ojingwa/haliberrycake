@@ -30,7 +30,7 @@ export default function AboutCTA() {
                 <br />Something Extraordinary
               </motion.h2>
               <motion.p variants={fadeUp} className="font-sans font-light text-white/80" style={{ fontSize: '1.05rem', lineHeight: '1.75' }}>
-                Whether you want a show-stopping cake or the confidence to bake your own —
+                Whether you want a show-stopping cake or the confidence to bake your own... 
                 Halimot and the Haliberry team are here for you.
               </motion.p>
               <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-4">
