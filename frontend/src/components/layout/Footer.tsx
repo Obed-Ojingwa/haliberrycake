@@ -52,7 +52,7 @@ export default function Footer() {
             <div className="space-y-2.5">
               {[
                 { icon: <Phone size={14}/>, text: '+44 (0)7XXX XXX XXX' },
-                { icon: <Mail size={14}/>,  text: 'hello@haliberrycake.co.uk' },
+                { icon: <Mail size={14}/>,  text: 'Haliberry2016@gmail.com' },
                 { icon: <MapPin size={14}/>, text: 'London, United Kingdom' },
               ].map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 font-sans text-sm" style={{ color: 'rgba(255,255,255,0.65)' }}>

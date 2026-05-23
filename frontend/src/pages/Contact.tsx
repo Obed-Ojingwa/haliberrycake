@@ -83,7 +83,7 @@ export default function Contact() {
 
               {[
                 { icon:<Phone size={18}/>,   label:'Phone / WhatsApp', value:'+44 (0)7XXX XXX XXX', href:'https://wa.me/447XXXXXXXXX' },
-                { icon:<Mail size={18}/>,    label:'Email',            value:'hello@haliberrycake.co.uk', href:'mailto:hello@haliberrycake.co.uk' },
+                { icon:<Mail size={18}/>,    label:'Email',            value:'Haliberry2016@gmail.com', href:'mailto:Haliberry2016@gmail.com' },
                 { icon:<MapPin size={18}/>,  label:'Location',         value:'London, United Kingdom', href:undefined },
                 { icon:<MessageCircle size={18}/>, label:'Instagram',  value:'@haliberrycake', href:'https://instagram.com/haliberrycake' },
               ].map(({ icon, label, value, href })=>(
