@@ -5,6 +5,7 @@ import CICImpactSection from '@/components/home/CICImpactSection'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import GalleryPreview from '@/components/home/GalleryPreview'
 import CTABanner from '@/components/home/CTABanner'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <TestimonialsSection />
       <GalleryPreview />
       <CTABanner />
+      <WhatsAppFloatButton />
     </>
   )
 }

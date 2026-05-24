@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         peach: {
-          DEFAULT: '#F8A974',
+          DEFAULT: '#d3a687',
           light: '#FBD6B2',
-          dark: '#E8895A',
+          dark: '#e9b9a1',
         },
         apricot: '#FBD6B2',
         blush: {
@@ -37,8 +37,8 @@ const config: Config = {
           500: '#E8895A',
           600: '#C96B3A',
           700: '#A04E25',
-          800: '#7A3618',
-          900: '#52200E',
+          800: '#997262',
+          900: '#d3a290',
         },
       },
       fontFamily: {
