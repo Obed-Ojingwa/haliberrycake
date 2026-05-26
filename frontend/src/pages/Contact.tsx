@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { Send, CheckCircle, Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
 import { inquiryApi } from '@/lib/api'
 import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 const schema = z.object({
   name:         z.string().min(2, 'Please enter your name'),
@@ -45,6 +46,7 @@ export default function Contact() {
 
   return (
     <>
+    <WhatsAppFloatButton />
       {/* Hero */}
       <section className="pt-32 pb-16 relative overflow-hidden"
         style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
