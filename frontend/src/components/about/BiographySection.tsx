@@ -1,6 +1,7 @@
 // C:\Users\Melody\Documents\haliberrycake\frontend\src\components\about\BiographySection.tsx
 import { motion } from 'framer-motion'
 import { fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
+import founderPortrait from '@/public/haliberry_founder.jpeg'
 
 export default function BiographySection() {
   return (
@@ -17,16 +18,12 @@ export default function BiographySection() {
             viewport={{ once: true, amount: 0.2 }}
           >
             {/* Primary photo card */}
-            <div
-              className="aspect-[3/4] rounded-[2.5rem] overflow-hidden"
-              style={{ background: 'linear-gradient(160deg, var(--cream) 0%, var(--apricot) 60%, var(--blush) 100%)' }}
-            >
-              <div className="flex items-center justify-center h-full flex-col gap-3 text-center p-10">
-                <span className="text-8xl">👩🏾‍🍳</span>
-                <p className="font-serif italic text-lg" style={{ color: 'var(--text-muted)' }}>
-                  Halimot, portrait photo
-                </p>
-              </div>
+            <div className="aspect-[3/4] rounded-[2.5rem] overflow-hidden bg-[var(--cream)]">
+              <img
+                src={founderPortrait}
+                alt="Portrait of Halimot"
+                className="h-full w-full object-cover"
+              />
             </div>
 
             {/* Floating quote card */}
