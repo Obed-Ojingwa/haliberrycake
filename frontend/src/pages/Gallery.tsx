@@ -5,6 +5,7 @@ import { fadeUp, staggerContainer } from '@/lib/animations'
 import { galleryApi } from '@/lib/api'
 import type { GalleryImage } from '@/lib/api'
 import CTABanner from '@/components/home/CTABanner'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 export default function Gallery() {
   const { data: images = [], isLoading } = useQuery<GalleryImage[]>({
@@ -15,6 +16,7 @@ export default function Gallery() {
 
   return (
     <>
+    <WhatsAppFloatButton />
       <section className="pt-32 pb-20 relative overflow-hidden"
         style={{ background: 'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"
