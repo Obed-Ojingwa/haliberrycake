@@ -19,7 +19,7 @@ export default function BiographySection() {
             {/* Primary photo card */}
             <div className="aspect-[3/4] rounded-[2.5rem] overflow-hidden bg-[var(--cream)]">
               <img
-                src="public/haliberry_founder.jpeg"
+                src="/haliberry_founder.jpeg"
                 alt="Portrait of Halimot"
                 className="h-full w-full object-cover"
               />
