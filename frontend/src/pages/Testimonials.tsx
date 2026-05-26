@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet-async'
 import { fadeUp, staggerContainer } from '@/lib/animations'
 import type { Testimonial } from '@/types'
 import CTABanner from '@/components/home/CTABanner'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 const ACCENT_COLOURS = ['var(--peach)','var(--blush)','var(--golden)','var(--apricot)']
 
@@ -29,6 +30,7 @@ export default function Testimonials() {
 
   return (
     <>
+    <WhatsAppFloatButton />
       <Helmet>
         <title>Client Reviews — Haliberry Cake London | Luxury Cake Testimonials</title>
         <meta name="description" content="Read what our clients say about Haliberry Cake. 5-star reviews for wedding cakes, birthday cakes, baking classes and more in London." />
