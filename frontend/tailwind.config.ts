@@ -10,35 +10,35 @@ const config: Config = {
     extend: {
       colors: {
         peach: {
-          DEFAULT: '#d3a687',
+          DEFAULT: '#F8A974',
           light: '#FBD6B2',
-          dark: '#e9b9a1',
+          dark: '#E7A260',
         },
         apricot: '#FBD6B2',
         blush: {
           DEFAULT: '#F2B6B8',
           light: '#F9D8D9',
-          dark: '#D9898C',
+          dark: '#D9A6AB',
         },
         golden: {
           DEFAULT: '#F6E2B5',
-          dark: '#D4BA7A',
+          dark: '#E2C892',
         },
         cream: {
           DEFAULT: '#F2E8E1',
-          dark: '#E0D0C5',
+          dark: '#E6D8CF',
         },
         brand: {
           50:  '#FDF7F2',
-          100: '#FBD6B2',
-          200: '#F8C49A',
+          100: '#F2E8E1',
+          200: '#FBD6B2',
           300: '#F8A974',
           400: '#F2B6B8',
-          500: '#E8895A',
-          600: '#C96B3A',
-          700: '#A04E25',
-          800: '#997262',
-          900: '#d3a290',
+          500: '#F6E2B5',
+          600: '#D9B98F',
+          700: '#BEA179',
+          800: '#A58B6A',
+          900: '#8A7460',
         },
       },
       fontFamily: {
@@ -72,7 +72,7 @@ const config: Config = {
         'gradient-hero': 'linear-gradient(135deg, #FDF7F2 0%, #FBD6B2 40%, #F2B6B8 100%)',
         'gradient-peach': 'linear-gradient(180deg, #FDF7F2 0%, #FBD6B2 100%)',
         'gradient-warm': 'linear-gradient(135deg, #F2E8E1 0%, #FBD6B2 50%, #F6E2B5 100%)',
-        'gradient-cream': 'linear-gradient(180deg, #FFFFFF 0%, #F2E8E1 100%)',
+        'gradient-cream': 'linear-gradient(180deg, #FDF7F2 0%, #F2E8E1 100%)',
         'gradient-dark-overlay': 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(80, 32, 14, 0.6) 100%)',
       },
       animation: {

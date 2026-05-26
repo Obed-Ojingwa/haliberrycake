@@ -10,6 +10,7 @@ import { classesApi, inquiryApi } from '@/lib/api'
 import { fadeUp, staggerContainer, fadeLeft, fadeRight } from '@/lib/animations'
 import type { CakeClass } from '@/types'
 import CTABanner from '@/components/home/CTABanner'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 const schema = z.object({
   name:    z.string().min(2, 'Please enter your name'),
@@ -147,6 +148,7 @@ export default function CakeClasses() {
   })
   return (
     <>
+    <WhatsAppFloatButton />
       <section className="pt-32 pb-20 relative overflow-hidden"
         style={{ background:'linear-gradient(145deg, #2C1810 0%, #52200E 55%, #7A3618 100%)' }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"

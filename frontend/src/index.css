@@ -41,7 +41,7 @@ html, body, #root {
 body {
   font-family: 'Poppins', sans-serif;
   color: var(--text-primary);
-  background-color: #FFFFFF;
+  background-color: var(--cream);
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -55,7 +55,7 @@ html {
 body {
   font-family: 'Poppins', sans-serif;
   color: var(--text-primary);
-  background-color: #FFFFFF;
+  background-color: var(--cream);
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -165,7 +165,7 @@ a {
 
   /* Cards */
   .card-luxury {
-    background: white;
+    background: var(--cream-white);
     border-radius: 1.25rem;
     box-shadow: var(--shadow-luxury);
     transition: var(--transition-base);
@@ -178,10 +178,10 @@ a {
 
   /* Gradient Backgrounds */
   .bg-brand-gradient {
-    background: linear-gradient(135deg, #FDF7F2 0%, #FBD6B2 40%, #F2B6B8 100%);
+    background: linear-gradient(135deg, var(--cream-white) 0%, #FBD6B2 40%, #F2B6B8 100%);
   }
   .bg-cream-section {
-    background: linear-gradient(180deg, #FFFFFF 0%, #F2E8E1 100%);
+    background: linear-gradient(180deg, var(--cream-white) 0%, var(--cream) 100%);
   }
 
   /* Decorative Divider */

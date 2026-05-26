@@ -5,10 +5,12 @@ import BiographySection from '@/components/about/BiographySection'
 import TimelineSection  from '@/components/about/TimelineSection'
 import ValuesSection    from '@/components/about/ValuesSection'
 import AboutCTA         from '@/components/about/AboutCTA'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 export default function About() {
   return (
     <>
+    <WhatsAppFloatButton />
       <Helmet>
         <title>About Halimot — Founder of Haliberry Cake London</title>
         <meta name="description" content="Meet Halimot, the visionary founder of Haliberry Cake. A story of strength, healing and creativity baked into every luxury cake in London." />
