@@ -1,7 +1,6 @@
 // C:\Users\Melody\Documents\haliberrycake\frontend\src\components\about\BiographySection.tsx
 import { motion } from 'framer-motion'
 import { fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
-import founderPortrait from '@/public/haliberry_founder.jpeg'
 
 export default function BiographySection() {
   return (
@@ -20,7 +19,7 @@ export default function BiographySection() {
             {/* Primary photo card */}
             <div className="aspect-[3/4] rounded-[2.5rem] overflow-hidden bg-[var(--cream)]">
               <img
-                src={founderPortrait}
+                src="/haliberry_founder.jpeg"
                 alt="Portrait of Halimot"
                 className="h-full w-full object-cover"
               />
