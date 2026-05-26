@@ -7,6 +7,7 @@ import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
 import { api } from '@/lib/api'
 import type { CICProgram } from '@/types'
 import CTABanner from '@/components/home/CTABanner'
+import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 const IMPACT = [
   { icon:<Users size={22}/>,   value:'200+', label:'Women Supported' },
@@ -24,6 +25,7 @@ export default function CIC() {
 
   return (
     <>
+    <WhatsAppFloatButton />
       {/* Hero */}
       <section className="pt-32 pb-20 relative overflow-hidden"
         style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
