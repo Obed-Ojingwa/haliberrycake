@@ -32,6 +32,7 @@ export default function App() {
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/contact"      element={<Contact />} />
         </Route>
+        
 
         {/* ── Admin login (no Layout, no auth guard) ── */}
         <Route path="/admin/login" element={<AdminLogin />} />
