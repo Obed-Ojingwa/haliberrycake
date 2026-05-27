@@ -6,7 +6,7 @@ export default function AboutHero() {
   return (
     <section
       className="relative min-h-[70vh] flex items-end overflow-hidden"
-      style={{ background: 'linear-gradient(145deg, #2C1810 0%, #52200E 50%, #7A3618 100%)' }}
+      style={{ background: 'linear-gradient(145deg, #7B3F56 0%, #DCA6C0 50%, #F4E6EA 100%)' }}
     >
       {/* Ambient top-right orb */}
       <div

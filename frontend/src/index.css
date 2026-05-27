@@ -11,12 +11,13 @@
   --peach:       #F8A974;
   --apricot:     #FBD6B2;
   --blush:       #F2B6B8;
+  --petal:       #F7D7E6;
   --golden:      #F6E2B5;
   --cream:       #F2E8E1;
   --cream-white: #FDF7F2;
 
   --text-primary:   #2C1810;
-  --text-secondary: #6B4232;
+  --text-secondary: #8c6859;
   --text-muted:     #A0795A;
   --text-light:     #C4A592;
 
@@ -178,7 +179,7 @@ a {
 
   /* Gradient Backgrounds */
   .bg-brand-gradient {
-    background: linear-gradient(135deg, var(--cream-white) 0%, #FBD6B2 40%, #F2B6B8 100%);
+    background: linear-gradient(135deg, var(--cream-white) 0%, var(--petal) 45%, var(--blush) 100%);
   }
   .bg-cream-section {
     background: linear-gradient(180deg, var(--cream-white) 0%, var(--cream) 100%);

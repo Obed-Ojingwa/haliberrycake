@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #2C1810 0%, #52200E 40%, #7A3618 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #7B3F56 0%, #DCA6C0 40%, #F4E6EA 100%)' }}
     >
       {/* Ambient orb blobs */}
       <div

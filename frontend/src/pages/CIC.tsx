@@ -28,7 +28,7 @@ export default function CIC() {
     <WhatsAppFloatButton />
       {/* Hero */}
       <section className="pt-32 pb-20 relative overflow-hidden"
-        style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
+        style={{ background:'linear-gradient(145deg,#7B3F56 0%,#DCA6C0 55%,#F4E6EA 100%)' }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage:'radial-gradient(circle at 70% 40%, #F8A974, transparent 55%)' }}/>
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

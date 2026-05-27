@@ -49,7 +49,7 @@ export default function Contact() {
     <WhatsAppFloatButton />
       {/* Hero */}
       <section className="pt-32 pb-16 relative overflow-hidden"
-        style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
+        style={{ background:'linear-gradient(145deg,#7B3F56 0%,#DCA6C0 55%,#F4E6EA 100%)' }}>
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
             <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Get in Touch</motion.span>

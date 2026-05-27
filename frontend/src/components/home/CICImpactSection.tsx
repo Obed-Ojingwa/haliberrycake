@@ -15,7 +15,7 @@ export default function CICImpactSection() {
   return (
     <section
       className="py-24 lg:py-36 overflow-hidden relative"
-      style={{ background: 'linear-gradient(135deg, #2C1810 0%, #52200E 55%, #7A3618 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #7B3F56 0%, #DCA6C0 55%, #F4E6EA 100%)' }}
     >
       {/* Ambient orb */}
       <div
