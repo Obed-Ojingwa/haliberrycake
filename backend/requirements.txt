@@ -5,9 +5,9 @@ sqlalchemy==2.0.31
 alembic==1.13.1
 psycopg2-binary==2.9.9
 python-dotenv==1.0.1
-# Use pydantic versions that have good wheel support
+# Specific versions to avoid conflicts and ensure wheel compatibility
 pydantic==2.7.4
-pydantic-core==2.14.6
+pydantic-core==2.18.4
 pydantic-settings==2.3.4
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
