@@ -15,27 +15,42 @@ services:
       env | grep -E "CARGO|PYDANTIC" || echo "No CARGO/PYDANTIC vars found"
       echo ""
 
-      # Double-check by setting them again (though they should already be set from envVars)
+      # Set and export variables explicitly
       export CARGO_HOME="/tmp/cargo"
       export CARGO_TARGET_DIR="/tmp/cargo-target"
       export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
+      export RUSTUP_HOME="/tmp/rustup"  # Also set Rustup home
 
-      echo "=== After export ==="
+      echo "=== After explicit export ==="
       echo "CARGO_HOME: $CARGO_HOME"
       echo "CARGO_TARGET_DIR: $CARGO_TARGET_DIR"
       echo "PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: $PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON"
+      echo "RUSTUP_HOME: $RUSTUP_HOME"
       echo ""
 
-      # Create the directories and verify they're writable
-      echo "=== Creating and verifying Cargo directories ==="
-      mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR"
-      ls -ld "$CARGO_HOME" "$CARGO_TARGET_DIR"
+      # Create all necessary directories
+      echo "=== Creating directories ==="
+      mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"
+      ls -ld "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"
 
-      # Test write access
-      echo "Testing write access:"
-      touch "$CARGO_HOME/test" && echo "✓ Can write to $CARGO_HOME" || echo "✗ Cannot write to $CARGO_HOME"
-      touch "$CARGO_TARGET_DIR/test" && echo "✓ Can write to $CARGO_TARGET_DIR" || echo "✗ Cannot write to $CARGO_TARGET_DIR"
-      rm -f "$CARGO_HOME/test" "$CARGO_TARGET_DIR/test"
+      # Test write access extensively
+      echo "=== Testing write access ==="
+      for dir in "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"; do
+        echo "Testing $dir:"
+        if touch "$dir/test_write_$$" 2>/dev/null; then
+          echo "✓ Can write to $dir"
+          rm -f "$dir/test_write_$$"
+        else
+          echo "✗ CANNOT write to $dir - CHECK PERMISSIONS!"
+          ls -la "$(dirname "$dir")"
+          exit 1
+        fi
+      done
+      echo ""
+
+      # Verify Cargo is using our directories
+      echo "=== Verifying Cargo configuration ==="
+      CARGO_HOME="$CARGO_HOME" cargo env | grep -E "HOME|TARGET" || echo "Cargo env check failed"
       echo ""
 
       # UPGRADE PIP FIRST - critical for good wheel support
@@ -43,31 +58,41 @@ services:
       pip install --upgrade pip
       echo ""
 
-      # NOW try to install pydantic-core specifically as binary
+      # Install pydantic-core with explicit binary preference and no build isolation
       echo "=== Installing pydantic-core (binary only) ==="
-      # Use --no-build-isolation to prevent it from creating its own build environment
-      # that might not inherit our env vars correctly
-      PIP_NO_BUILD_ISOLATION=1 pip install --only-binary :all: pydantic-core==2.18.4 && \
+      # Try multiple approaches to get a binary wheel
+      PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir pydantic-core==2.18.4 && \
         echo "✓ pydantic-core installed successfully as binary" || {
         echo "✗ FAILED to install pydantic-core as binary"
-        echo "This means there's no compatible wheel for pydantic-core==2.18.4 on this platform"
-        echo "Available versions:"
+        echo "Trying to find available wheels..."
         pip index versions pydantic-core
-        exit 1
+        echo ""
+        echo "Trying without version constraint to get any binary..."
+        PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir pydantic-core && \
+          echo "✓ pydantic-core installed (any version)" || {
+          echo "✗ Still failing - checking if we can build from source with our env"
+          # Last resort: try building from source but ensure our env is used
+          CARGO_HOME="$CARGO_HOME" CARGO_TARGET_DIR="$CARGO_TARGET_DIR" RUSTUP_HOME="$RUSTUP_HOME" pip install --no-build-isolation --no-cache-dir pydantic-core && \
+            echo "✓ pydantic-core built from source with our Cargo env" || {
+            echo "✗ All attempts failed"
+            exit 1
+          }
+        }
       }
       echo ""
 
       # Install the rest of the requirements
       echo "=== Installing remaining dependencies ==="
-      # Also use --no-build-isolation here for consistency
-      PIP_NO_BUILD_ISOLATION=1 pip install --only-binary :all: -r requirements.txt
+      # Use consistent flags
+      PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir -r requirements.txt
       echo ""
       echo "=== Build completed successfully ==="
     startCommand: |
       cd backend
       echo "=== Starting application ==="
-      # Ensure environment variables are set for runtime too (though they're less critical at runtime)
+      # Ensure environment variables are set for runtime too
       export CARGO_HOME="/tmp/cargo"
       export CARGO_TARGET_DIR="/tmp/cargo-target"
       export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
+      export RUSTUP_HOME="/tmp/rustup"
       uvicorn app.main:app --host 0.0.0.0 --port $PORT
