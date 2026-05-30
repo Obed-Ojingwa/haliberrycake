@@ -4,35 +4,70 @@ services:
     env: python
     plan: free
     envVars:
-      # Point Cargo to writable directories to avoid read-only filesystem errors
+      # These are CRITICAL - must be set before any pip install runs
       CARGO_HOME: /tmp/cargo
       CARGO_TARGET_DIR: /tmp/cargo-target
-      # Prevent building pydantic-core from source (use pre-built wheels)
+      # Prevent building pydantic-core from source
       PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: 0
     buildCommand: |
       cd backend
-      echo "=== Render Build Environment ==="
+      echo "=== DEBUG: Environment variables at start of build ==="
+      env | grep -E "CARGO|PYDANTIC" || echo "No CARGO/PYDANTIC vars found"
+      echo ""
+
+      # Double-check by setting them again (though they should already be set from envVars)
+      export CARGO_HOME="/tmp/cargo"
+      export CARGO_TARGET_DIR="/tmp/cargo-target"
+      export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
+
+      echo "=== After export ==="
       echo "CARGO_HOME: $CARGO_HOME"
       echo "CARGO_TARGET_DIR: $CARGO_TARGET_DIR"
       echo "PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: $PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON"
       echo ""
 
-      # Show environment variables for debugging
-      echo "=== Environment Variables ==="
-      env | grep -E "CARGO|PYDANTIC|PIP_" || echo "No matching env vars found"
+      # Create the directories and verify they're writable
+      echo "=== Creating and verifying Cargo directories ==="
+      mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR"
+      ls -ld "$CARGO_HOME" "$CARGO_TARGET_DIR"
+
+      # Test write access
+      echo "Testing write access:"
+      touch "$CARGO_HOME/test" && echo "✓ Can write to $CARGO_HOME" || echo "✗ Cannot write to $CARGO_HOME"
+      touch "$CARGO_TARGET_DIR/test" && echo "✓ Can write to $CARGO_TARGET_DIR" || echo "✗ Cannot write to $CARGO_TARGET_DIR"
+      rm -f "$CARGO_HOME/test" "$CARGO_TARGET_DIR/test"
       echo ""
 
-      # Upgrade core packaging tools
-      echo "=== Upgrading pip, setuptools, wheel ==="
-      pip install --upgrade pip setuptools wheel
+      # UPGRADE PIP FIRST - critical for good wheel support
+      echo "=== Upgrading pip to latest ==="
+      pip install --upgrade pip
       echo ""
 
-      # Install dependencies with preference for binary wheels
-      echo "=== Installing dependencies (preferring binary wheels) ==="
-      pip install --only-binary :all: -r requirements.txt
+      # NOW try to install pydantic-core specifically as binary
+      echo "=== Installing pydantic-core (binary only) ==="
+      # Use --no-build-isolation to prevent it from creating its own build environment
+      # that might not inherit our env vars correctly
+      PIP_NO_BUILD_ISOLATION=1 pip install --only-binary :all: pydantic-core==2.18.4 && \
+        echo "✓ pydantic-core installed successfully as binary" || {
+        echo "✗ FAILED to install pydantic-core as binary"
+        echo "This means there's no compatible wheel for pydantic-core==2.18.4 on this platform"
+        echo "Available versions:"
+        pip index versions pydantic-core
+        exit 1
+      }
+      echo ""
+
+      # Install the rest of the requirements
+      echo "=== Installing remaining dependencies ==="
+      # Also use --no-build-isolation here for consistency
+      PIP_NO_BUILD_ISOLATION=1 pip install --only-binary :all: -r requirements.txt
       echo ""
       echo "=== Build completed successfully ==="
     startCommand: |
       cd backend
-      echo "=== Starting Haliberry Cake API ==="
+      echo "=== Starting application ==="
+      # Ensure environment variables are set for runtime too (though they're less critical at runtime)
+      export CARGO_HOME="/tmp/cargo"
+      export CARGO_TARGET_DIR="/tmp/cargo-target"
+      export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
       uvicorn app.main:app --host 0.0.0.0 --port $PORT

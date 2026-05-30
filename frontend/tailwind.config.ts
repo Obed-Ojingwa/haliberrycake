@@ -18,7 +18,7 @@ const config: Config = {
         blush: {
           DEFAULT: '#F2B6B8',
           light: '#F9D8D9',
-          dark: '#D9A6AB',
+          dark: '#F8A974',
         },
         golden: {
           DEFAULT: '#F6E2B5',
