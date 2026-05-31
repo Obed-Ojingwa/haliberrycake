@@ -4,95 +4,129 @@ services:
     env: python
     plan: free
     envVars:
-      # These are CRITICAL - must be set before any pip install runs
+      # These are set for the service, including build and runtime
       CARGO_HOME: /tmp/cargo
       CARGO_TARGET_DIR: /tmp/cargo-target
-      # Prevent building pydantic-core from source
+      CARGO_REGISTRY_INDEX: /tmp/cargo/registry/index
+      CARGO_REGISTRY_GIT: /tmp/cargo/registry/git
+      RUSTUP_HOME: /tmp/rustup
       PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: 0
+      PIP_NO_BUILD_ISOLATION: 1
+      PIP_USE_PEP517: 1
+      PIP_PREFER_BINARY: 1
+      PIP_NO_CACHE_DIR: 1
     buildCommand: |
       cd backend
-      echo "=== DEBUG: Environment variables at start of build ==="
-      env | grep -E "CARGO|PYDANTIC" || echo "No CARGO/PYDANTIC vars found"
-      echo ""
-
-      # Set and export variables explicitly
-      export CARGO_HOME="/tmp/cargo"
-      export CARGO_TARGET_DIR="/tmp/cargo-target"
-      export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
-      export RUSTUP_HOME="/tmp/rustup"  # Also set Rustup home
-
-      echo "=== After explicit export ==="
+      echo "=== ENVIRONMENT VARIABLES ==="
       echo "CARGO_HOME: $CARGO_HOME"
       echo "CARGO_TARGET_DIR: $CARGO_TARGET_DIR"
-      echo "PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: $PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON"
+      echo "CARGO_REGISTRY_INDEX: $CARGO_REGISTRY_INDEX"
+      echo "CARGO_REGISTRY_GIT: $CARGO_REGISTRY_GIT"
       echo "RUSTUP_HOME: $RUSTUP_HOME"
+      echo "PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON: $PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON"
+      echo "PIP_NO_BUILD_ISOLATION: $PIP_NO_BUILD_ISOLATION"
+      echo "PIP_USE_PEP517: $PIP_USE_PEP517"
+      echo "PIP_PREFER_BINARY: $PIP_PREFER_BINARY"
+      echo "PIP_NO_CACHE_DIR: $PIP_NO_CACHE_DIR"
       echo ""
 
-      # Create all necessary directories
-      echo "=== Creating directories ==="
-      mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"
-      ls -ld "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"
+      # Show what Cargo sees for its environment
+      echo "=== CARGO ENVIRONMENT (AS SEEN BY CARGO) ==="
+      cargo env 2>/dev/null | grep -E "HOME|TARGET|REGISTRY" || echo "  Note: cargo env not available (cargo may not be installed yet)"
+      echo ""
 
-      # Test write access extensively
-      echo "=== Testing write access ==="
-      for dir in "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"; do
-        echo "Testing $dir:"
-        if touch "$dir/test_write_$$" 2>/dev/null; then
-          echo "✓ Can write to $dir"
-          rm -f "$dir/test_write_$$"
+      # Create directory structure for Cargo and Rust
+      echo "=== CREATING DIRECTORY STRUCTURE ==="
+      mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$CARGO_REGISTRY_INDEX" "$CARGO_REGISTRY_GIT" "$RUSTUP_HOME"
+
+      # Create .cargo/config to override registry and git locations
+      echo "=== CREATING .CARGO/CONFIG ==="
+      mkdir -p "$CARGO_HOME/.cargo"
+      cat > "$CARGO_HOME/.cargo/config" <<'EOF'
+[registry]
+index = "$CARGO_REGISTRY_INDEX"
+
+[source.git]
+[net]
+git-fetch-with-cli = true
+EOF
+      echo "Created $CARGO_HOME/.cargo/config"
+      echo "Contents:"
+      cat "$CARGO_HOME/.cargo/config"
+      echo ""
+
+      # Verify all directories are writable
+      echo "=== VERIFYING DIRECTORY PERMISSIONS ==="
+      dirs_to_check=("$CARGO_HOME" "$CARGO_TARGET_DIR" "$CARGO_REGISTRY_INDEX" "$CARGO_REGISTRY_GIT" "$RUSTUP_HOME" "$CARGO_HOME/.cargo")
+      all_writable=true
+      for dir in "${dirs_to_check[@]}"; do
+        if [ ! -w "$dir" ]; then
+          echo "ERROR: $dir is not writable"
+          all_writable=false
+        fi
+        # Test write access
+        test_file="$dir/.write_test_$$"
+        if ! touch "$test_file" 2>/dev/null; then
+          echo "ERROR: Cannot write to $dir"
+          all_writable=false
         else
-          echo "✗ CANNOT write to $dir - CHECK PERMISSIONS!"
-          ls -la "$(dirname "$dir")"
-          exit 1
+          rm -f "$test_file"
         fi
       done
+
+      if [ "$all_writable" = false ]; then
+        echo "FATAL: One or more directories are not writable"
+        exit 1
+      fi
+      echo "✓ All directories are writable"
       echo ""
 
-      # Verify Cargo is using our directories
-      echo "=== Verifying Cargo configuration ==="
-      CARGO_HOME="$CARGO_HOME" cargo env | grep -E "HOME|TARGET" || echo "Cargo env check failed"
-      echo ""
-
-      # UPGRADE PIP FIRST - critical for good wheel support
-      echo "=== Upgrading pip to latest ==="
+      # UPGRADE PIP TO ENSURE WE HAVE THE LATEST WHEEL SUPPORT
+      echo "=== UPGRADING PIP ==="
       pip install --upgrade pip
       echo ""
 
-      # Install pydantic-core with explicit binary preference and no build isolation
-      echo "=== Installing pydantic-core (binary only) ==="
-      # Try multiple approaches to get a binary wheel
-      PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir pydantic-core==2.18.4 && \
-        echo "✓ pydantic-core installed successfully as binary" || {
-        echo "✗ FAILED to install pydantic-core as binary"
-        echo "Trying to find available wheels..."
-        pip index versions pydantic-core
+      # INSTALL PYDANTIC-CORE - TRY TO GET BINARY WHEEL FIRST
+      echo "=== INSTALLING PYDANTIC-CORE ==="
+
+      # First try: install without specifying version to get latest compatible binary wheel
+      echo "Attempt 1: Installing pydantic-core (preferring binary wheels)..."
+      if pip install --only-binary :all: pydantic-core; then
+        echo "SUCCESS: Installed pydantic-core as binary wheel"
+      else
+        echo "FAILED: Could not install pydantic-core as binary wheel"
         echo ""
-        echo "Trying without version constraint to get any binary..."
-        PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir pydantic-core && \
-          echo "✓ pydantic-core installed (any version)" || {
-          echo "✗ Still failing - checking if we can build from source with our env"
-          # Last resort: try building from source but ensure our env is used
-          CARGO_HOME="$CARGO_HOME" CARGO_TARGET_DIR="$CARGO_TARGET_DIR" RUSTUP_HOME="$RUSTUP_HOME" pip install --no-build-isolation --no-cache-dir pydantic-core && \
-            echo "✓ pydantic-core built from source with our Cargo env" || {
-            echo "✗ All attempts failed"
-            exit 1
-          }
-        }
-      }
+        echo "This means there is no pre-built binary wheel available for:"
+        echo "  Python $(python -c 'import sys; print(sys.version_info[:2])')"
+        echo "  Platform $(python -c 'import platform; print(platform.platform())')"
+        echo ""
+        echo "Since PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON=0 is set, we will NOT attempt to build from source."
+        echo ""
+        echo "Options to resolve this:"
+        echo "  1. Use a different version of pydantic that depends on a pydantic-core version with a binary wheel for this platform"
+        echo "  2. Allow building from source by removing or setting PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON=1"
+        echo "  3. Use a different base image/runtime that has compatible binary wheels"
+        echo ""
+        echo "Available pydantic-core versions (newest first):"
+        pip index versions pydantic-core | head -20
+        echo ""
+        exit 1
+      fi
       echo ""
 
-      # Install the rest of the requirements
-      echo "=== Installing remaining dependencies ==="
-      # Use consistent flags
-      PIP_NO_BUILD_ISOLATION=1 PIP_USE_PEP517=1 pip install --only-binary :all: --no-cache-dir -r requirements.txt
+      # INSTALL THE REST OF THE REQUIREMENTS
+      echo "=== INSTALLING REMAINING REQUIREMENTS ==="
+      pip install -r requirements.txt
       echo ""
-      echo "=== Build completed successfully ==="
+
+      echo "=== BUILD PROCESS COMPLETED SUCCESSFULLY ==="
     startCommand: |
       cd backend
-      echo "=== Starting application ==="
+      echo "=== STARTING APPLICATION ==="
       # Ensure environment variables are set for runtime too
       export CARGO_HOME="/tmp/cargo"
       export CARGO_TARGET_DIR="/tmp/cargo-target"
+      export CARGO_REGISTRY_INDEX="/tmp/cargo/registry/index"
+      export CARGO_REGISTRY_GIT="/tmp/cargo/registry/git"
       export PYDANTIC_CORE_BUILD_AGAINST_CURRENT_PYTHON="0"
-      export RUSTUP_HOME="/tmp/rustup"
       uvicorn app.main:app --host 0.0.0.0 --port $PORT
