@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     admin_password: str = "changeme"
 
     # CORS
-    frontend_url: str = "http://localhost:5173", "https://haliberrycake.vercel.app"
+    frontend_url: str = "https://haliberrycake.vercel.app"
     production_url: str = "https://haliberrycake.co.uk"
 
     @property
