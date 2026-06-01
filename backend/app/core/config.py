@@ -39,7 +39,7 @@ class Settings(BaseSettings):
         origins = [self.frontend_url, self.production_url]
         # Always allow localhost in development
         if self.app_env != "production":
-            origins += ["http://localhost:3000", "http://localhost:5173"]
+            origins += ["http://localhost:3000", "http://localhost:5173", "https://haliberrycake.vercel.app"]
         return list(set(origins))
 
     @field_validator("database_url")
