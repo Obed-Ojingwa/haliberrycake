@@ -19,4 +19,6 @@ frontend/dist/
 backend/venv/
 frontend/.env.local
 backend/.env
-
+backend/admin_seed.py
+backend/test_hash.py
+backend/test_db.py
