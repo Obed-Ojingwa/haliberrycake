@@ -11,6 +11,10 @@ uvicorn[standard]==0.34.3
 sqlalchemy==2.0.41
 alembic==1.15.2
 
+# Email validator
+email-validator==2.3.0
+pydantic[email]==2.13.0
+
 # PostgreSQL — binary wheel, zero compilation
 psycopg2-binary==2.9.10
 
