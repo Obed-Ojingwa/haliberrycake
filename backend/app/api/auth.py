@@ -8,6 +8,7 @@ from app.database.session import get_db
 from app.models.user import User
 from app.schemas.auth import LoginRequest, Token
 from app.core.auth import verify_password, create_access_token, hash_password
+from app.core.config import settings
 
 logger = logging.getLogger("haliberry.auth")
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -15,38 +16,69 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/login", response_model=Token)
 def login(payload: LoginRequest, db: Session = Depends(get_db)):
-    logger.info(f"Login attempt for: {payload.email}")
+    try:
+        logger.info(f"Login attempt for: {payload.email}")
 
-    user = db.query(User).filter(
-        User.email == payload.email,
-        User.is_active == True
-    ).first()
+        user = db.query(User).filter(
+            User.email == payload.email,
+            User.is_active == True
+        ).first()
 
-    if not user:
-        logger.warning(f"Login failed — user not found: {payload.email}")
+        if not user:
+            logger.warning(f"Login failed — user not found: {payload.email}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect email or password",
+            )
+
+        logger.info(f"User found: {user.email}, hash prefix: {user.hashed_password[:10]}")
+
+        try:
+            password_ok = verify_password(payload.password, user.hashed_password)
+            logger.info(f"Password check result: {password_ok}")
+        except Exception as e:
+            logger.error(f"Error in verify_password: {e}", exc_info=True)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Password verification error: {str(e)}",
+            )
+
+        if not password_ok:
+            logger.warning(f"Login failed — wrong password for: {payload.email}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect email or password",
+            )
+
+        try:
+            user.last_login = datetime.now(timezone.utc)
+            db.commit()
+            logger.info(f"Updated last login for: {user.email}")
+        except Exception as e:
+            logger.error(f"Error updating last login: {e}", exc_info=True)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Database update error: {str(e)}",
+            )
+
+        try:
+            token = create_access_token({"sub": user.email})
+            logger.info(f"Login successful: {user.email}")
+            return Token(access_token=token)
+        except Exception as e:
+            logger.error(f"Error creating access token: {e}", exc_info=True)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Token creation error: {str(e)}",
+            )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error in login: {e}", exc_info=True)
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Internal server error: {str(e)}",
         )
-
-    logger.info(f"User found: {user.email}, hash prefix: {user.hashed_password[:10]}")
-
-    password_ok = verify_password(payload.password, user.hashed_password)
-    logger.info(f"Password check result: {password_ok}")
-
-    if not password_ok:
-        logger.warning(f"Login failed — wrong password for: {payload.email}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-        )
-
-    user.last_login = datetime.now(timezone.utc)
-    db.commit()
-
-    token = create_access_token({"sub": user.email})
-    logger.info(f"Login successful: {user.email}")
-    return Token(access_token=token)
 
 
 @router.get("/debug-users")
@@ -84,21 +116,34 @@ def reset_admin_password(
     """
     TEMPORARY endpoint — resets a user's password directly.
     Use once to fix the password, then DELETE this endpoint.
-    
+
     Call via curl:
     curl -X POST "https://haliberrycake.onrender.com/api/v1/auth/reset-admin-password?email=admin44@haliberrycake.co.uk&new_password=YourNewPassword123"
     """
-    user = db.query(User).filter(User.email == email).first()
-    if not user:
-        return {"error": f"User not found: {email}"}
+    try:
+        user = db.query(User).filter(User.email == email).first()
+        if not user:
+            return {"error": f"User not found: {email}"}
 
-    user.hashed_password = hash_password(new_password)
-    db.commit()
-    return {
-        "success": True,
-        "message": f"Password reset for {email}",
-        "new_hash_prefix": user.hashed_password[:7],
-    }
+        user.hashed_password = hash_password(new_password)
+        db.commit()
+        return {
+            "success": True,
+            "message": f"Password reset for {email}",
+            "new_hash_prefix": user.hashed_password[:7],
+        }
+    except Exception as e:
+        return {"error": str(e), "type": type(e).__name__}
+
+
+@router.get("/test-hash")
+def test_hash():
+    try:
+        from app.core.auth import hash_password
+        hashed = hash_password("test123")
+        return {"input": "test123", "hash": hashed, "length": len(hashed)}
+    except Exception as e:
+        return {"error": str(e), "type": type(e).__name__}
 
 
 # # C:\Users\Melody\Documents\haliberrycake\backend\app\api\auth.py
