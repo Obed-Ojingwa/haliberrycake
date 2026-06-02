@@ -87,6 +87,14 @@ export const testimonialsApi = {
   delete: (id: string)                                => api.delete(`/api/v1/testimonials/${id}`),
 }
 
+// ─── Types ───────────────────────────────────────────────────────
+export type GalleryImage = {
+  id: string
+  url: string
+  title?: string
+  category?: string
+}
+
 // ─── Auth ────────────────────────────────────────────────────────
 export const authApi = {
   login: (email: string, password: string) =>
