@@ -90,7 +90,8 @@ def health():
     return {
         "status": "ok",
         "service": "Haliberry API",
-        "env": settings.app_env
+        "env": settings.app_env,
+        "message": "Health check updated after debugging"
     }
 
 
