@@ -1,3 +1,4 @@
+# C:\Users\Melody\Documents\haliberrycake\backend\app\main.py
 import logging
 from pathlib import Path
 from contextlib import asynccontextmanager
@@ -5,46 +6,49 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from slowapi import Limiter
+from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from slowapi import _rate_limit_exceeded_handler
 
 from app.core.config import settings
 from app.database.session import engine, Base
 from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic
 
-# ── Logging ─────────────────────────────
-logging.basicConfig(level=logging.INFO)
+# ── Logging ──────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
 logger = logging.getLogger("haliberry")
 
 LOCAL_UPLOAD_DIR = Path("/tmp/haliberry-uploads")
 
-# ── Rate limiter ────────────────────────
-limiter = Limiter(key_func=get_remote_address)
 
-# ── Lifespan (ONLY ONCE) ────────────────
+# ── Lifespan ─────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info(f"Starting API: {settings.app_env}")
-
+    logger.info(f"Starting Haliberry Cake API — env: {settings.app_env}")
+    logger.info(f"CORS origins: {settings.cors_origins}")
     try:
         if settings.app_env != "production":
             Base.metadata.create_all(bind=engine)
             LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+            logger.info("Dev: tables ensured, upload dir ready")
         else:
+            import sqlalchemy
             with engine.connect() as conn:
-                conn.execute(__import__("sqlalchemy").text("SELECT 1"))
-
-        logger.info("Database OK")
+                conn.execute(sqlalchemy.text("SELECT 1"))
+            logger.info("Production: database connection OK")
     except Exception as e:
-        logger.error(f"Startup error: {e}")
+        logger.error(f"STARTUP ERROR: {e}")
         raise
-
     yield
     logger.info("Shutdown complete")
 
-# ── App (ONLY ONCE) ─────────────────────
+
+# ── App ───────────────────────────────────────────────────────────
+limiter = Limiter(key_func=get_remote_address)
+
 app = FastAPI(
     title="Haliberry Cake API",
     version="1.0.0",
@@ -53,10 +57,10 @@ app = FastAPI(
     redoc_url="/api/redoc" if settings.app_env != "production" else None,
 )
 
-# ── Middleware ──────────────────────────
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# ── CORS (added ONCE) ─────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -65,34 +69,132 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Static files ────────────────────────
+# ── Static files (dev only) ───────────────────────────────────────
 if settings.app_env != "production":
+    LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     app.mount(
         "/static/uploads",
         StaticFiles(directory=str(LOCAL_UPLOAD_DIR)),
         name="uploads",
     )
 
-# ── Routers ─────────────────────────────
+# ── Routers ───────────────────────────────────────────────────────
 API_PREFIX = "/api/v1"
 
-app.include_router(auth.router, prefix=API_PREFIX)
-app.include_router(products.router, prefix=API_PREFIX)
+app.include_router(auth.router,         prefix=API_PREFIX)
+app.include_router(products.router,     prefix=API_PREFIX)
 app.include_router(cake_classes.router, prefix=API_PREFIX)
-app.include_router(gallery.router, prefix=API_PREFIX)
+app.include_router(gallery.router,      prefix=API_PREFIX)
 app.include_router(testimonials.router, prefix=API_PREFIX)
-app.include_router(inquiries.router, prefix=API_PREFIX)
-app.include_router(cic.router, prefix=API_PREFIX)
+app.include_router(inquiries.router,    prefix=API_PREFIX)
+app.include_router(cic.router,          prefix=API_PREFIX)
 
-# ── Health check ────────────────────────
+
+# ── Health check ─────────────────────────────────────────────────
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "service": "Haliberry API",
+        "service": "Haliberry Cake API",
         "env": settings.app_env,
-        "message": "Health check updated after debugging"
+        "cors_origins": settings.cors_origins,
     }
+
+# import logging
+# from pathlib import Path
+# from contextlib import asynccontextmanager
+
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.staticfiles import StaticFiles
+# from slowapi import Limiter
+# from slowapi.util import get_remote_address
+# from slowapi.errors import RateLimitExceeded
+# from slowapi import _rate_limit_exceeded_handler
+
+# from app.core.config import settings
+# from app.database.session import engine, Base
+# from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic
+
+# # ── Logging ─────────────────────────────
+# logging.basicConfig(level=logging.INFO)
+# logger = logging.getLogger("haliberry")
+
+# LOCAL_UPLOAD_DIR = Path("/tmp/haliberry-uploads")
+
+# # ── Rate limiter ────────────────────────
+# limiter = Limiter(key_func=get_remote_address)
+
+# # ── Lifespan (ONLY ONCE) ────────────────
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     logger.info(f"Starting API: {settings.app_env}")
+
+#     try:
+#         if settings.app_env != "production":
+#             Base.metadata.create_all(bind=engine)
+#             LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+#         else:
+#             with engine.connect() as conn:
+#                 conn.execute(__import__("sqlalchemy").text("SELECT 1"))
+
+#         logger.info("Database OK")
+#     except Exception as e:
+#         logger.error(f"Startup error: {e}")
+#         raise
+
+#     yield
+#     logger.info("Shutdown complete")
+
+# # ── App (ONLY ONCE) ─────────────────────
+# app = FastAPI(
+#     title="Haliberry Cake API",
+#     version="1.0.0",
+#     lifespan=lifespan,
+#     docs_url="/api/docs" if settings.app_env != "production" else None,
+#     redoc_url="/api/redoc" if settings.app_env != "production" else None,
+# )
+
+# # ── Middleware ──────────────────────────
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=settings.cors_origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# # ── Static files ────────────────────────
+# if settings.app_env != "production":
+#     app.mount(
+#         "/static/uploads",
+#         StaticFiles(directory=str(LOCAL_UPLOAD_DIR)),
+#         name="uploads",
+#     )
+
+# # ── Routers ─────────────────────────────
+# API_PREFIX = "/api/v1"
+
+# app.include_router(auth.router, prefix=API_PREFIX)
+# app.include_router(products.router, prefix=API_PREFIX)
+# app.include_router(cake_classes.router, prefix=API_PREFIX)
+# app.include_router(gallery.router, prefix=API_PREFIX)
+# app.include_router(testimonials.router, prefix=API_PREFIX)
+# app.include_router(inquiries.router, prefix=API_PREFIX)
+# app.include_router(cic.router, prefix=API_PREFIX)
+
+# # ── Health check ────────────────────────
+# @app.get("/health")
+# def health():
+#     return {
+#         "status": "ok",
+#         "service": "Haliberry API",
+#         "env": settings.app_env,
+#         "message": "Health check updated after debugging"
+#     }
 
 
 # # C:\Users\Melody\Documents\haliberrycake\backend\app\main.py
