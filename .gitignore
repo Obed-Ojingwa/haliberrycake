@@ -23,3 +23,5 @@ backend/admin_seed.py
 backend/test_hash.py
 backend/test_db.py
 .claude/
+backend/freshadmin.py
+backend/fix_password.py
