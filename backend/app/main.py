@@ -61,7 +61,7 @@ app = FastAPI(
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.include_router(site_settings.router, prefix="/api/v1")
+
 
 # ── CORS (added ONCE) ─────────────────────────────────────────────
 app.add_middleware(
@@ -91,6 +91,7 @@ app.include_router(gallery.router,      prefix=API_PREFIX)
 app.include_router(testimonials.router, prefix=API_PREFIX)
 app.include_router(inquiries.router,    prefix=API_PREFIX)
 app.include_router(cic.router,          prefix=API_PREFIX)
+app.include_router(site_settings.router, prefix=API_PREFIX)
 
 
 # ── Health check ─────────────────────────────────────────────────
