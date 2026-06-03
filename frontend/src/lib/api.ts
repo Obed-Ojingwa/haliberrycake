@@ -95,6 +95,22 @@ export type GalleryImage = {
   category?: string
 }
 
+// ─── Site Settings ───────────────────────────────────────────────
+export const siteSettingsApi = {
+  list:   () => api.get('/api/v1/site-settings'),
+  get:    (id: string) => api.get(`/api/v1/site-settings/${id}`),
+  create: (data: Record<string, unknown>) => api.post('/api/v1/site-settings', data),
+  update: (id: string, data: Record<string, unknown>) => api.patch(`/api/v1/site-settings/${id}`, data),
+  delete: (id: string) => api.delete(`/api/v1/site-settings/${id}`),
+  uploadImage: (id: string, file: File) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    return api.post(`/api/v1/site-settings/${id}/image`, fd, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
+}
+
 // ─── Auth ────────────────────────────────────────────────────────
 export const authApi = {
   login: (email: string, password: string) =>

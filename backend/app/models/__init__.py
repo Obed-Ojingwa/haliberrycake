@@ -7,8 +7,9 @@ from .gallery     import GalleryImage
 from .inquiry     import Inquiry
 from .cic         import CICProgram
 from .user        import User
+from .site        import SiteSetting
 
 __all__ = [
     "Product", "CakeClass", "Testimonial",
-    "GalleryImage", "Inquiry", "CICProgram", "User",
+    "GalleryImage", "Inquiry", "CICProgram", "User", "SiteSetting",
 ]

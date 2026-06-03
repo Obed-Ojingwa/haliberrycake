@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Cake, Star, BookOpen } from 'lucide-react'
 import { heroTextReveal, imageFloat } from '@/lib/animations'
+import { useSiteSettings } from '@/hooks/useSiteSettings'
 
 export default function HeroSection() {
+  const { data: siteSettings = [] } = useSiteSettings()
+  const heroBackground = siteSettings.find(setting => setting.key === 'hero_background')
+  const backgroundStyle = heroBackground?.image_url
+    ? { backgroundImage: `url(${heroBackground.image_url})` }
+    : { background: 'linear-gradient(135deg, #7B3F56 0%, #DCA6C0 40%, #F4E6EA 100%)' }
+
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #7B3F56 0%, #DCA6C0 40%, #F4E6EA 100%)' }}
+      style={backgroundStyle}
     >
       {/* Ambient orb blobs */}
       <div
