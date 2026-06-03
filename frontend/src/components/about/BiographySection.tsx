@@ -103,7 +103,7 @@ export default function BiographySection() {
               >
                 {para}
               </motion.p>
-            )))
+            ))}
 
             {/* Credentials strip */}
             <motion.div
