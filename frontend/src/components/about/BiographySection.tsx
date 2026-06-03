@@ -1,13 +1,8 @@
 // C:\Users\Melody\Documents\haliberrycake\frontend\src\components\about\BiographySection.tsx
 import { motion } from 'framer-motion'
 import { fadeLeft, fadeRight, staggerContainer } from '@/lib/animations'
-import { useSiteSettings } from '@/hooks/useSiteSettings'
 
 export default function BiographySection() {
-  const { data: siteSettings = [] } = useSiteSettings()
-  const founderPortrait = siteSettings.find(setting => setting.key === 'founder_portrait')
-  const founderImageUrl = founderPortrait?.image_url || '/haliberry_founder.jpeg'
-
   return (
     <section className="py-24 lg:py-36 overflow-hidden" style={{ background: 'white' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +19,7 @@ export default function BiographySection() {
             {/* Primary photo card */}
             <div className="aspect-[3/4] rounded-[2.5rem] overflow-hidden bg-[var(--cream)]">
               <img
-                src={founderImageUrl}
+                src="/haliberry_founder.jpeg"
                 alt="Portrait of Halimot"
                 className="h-full w-full object-cover"
               />

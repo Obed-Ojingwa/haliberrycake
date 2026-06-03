@@ -88,7 +88,6 @@ app.include_router(gallery.router,      prefix=API_PREFIX)
 app.include_router(testimonials.router, prefix=API_PREFIX)
 app.include_router(inquiries.router,    prefix=API_PREFIX)
 app.include_router(cic.router,          prefix=API_PREFIX)
-app.include_router(site.router,         prefix=API_PREFIX)
 
 
 # ── Health check ─────────────────────────────────────────────────

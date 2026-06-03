@@ -17,12 +17,11 @@ export default function About() {
         <meta name="description" content="Meet Halimot, the visionary founder of Haliberry Cake. A story of strength, healing and creativity baked into every luxury cake in London." />
         <meta property="og:title" content="About Halimot — Haliberry Cake Founder" />
         <meta property="og:description" content="A story of strength, healing and creativity from London's luxury cake artist." />
-        <link rel="canonical" href="https://haliberrycake.co.uk/about" /> {/* Check on this --- I will change this later*/}
+        <link rel="canonical" href="https://haliberrycake.co.uk/about" /> {/* Check on this --- I will change this later*/}  
       </Helmet>
       <AboutHero />
       <HaliberryCICSection />
       <BiographySection />
-      <AboutImagesSection />
       <TimelineSection />
       <ValuesSection />
       <AboutCTA />
