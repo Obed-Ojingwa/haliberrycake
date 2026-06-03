@@ -1,3 +1,4 @@
+// C:\Users\Melody\Documents\haliberrycake\frontend\src\pages\Shop.tsx
 import WhatsAppFloatButton from "@/components/ui/WhatsAppFloatButton";
 
 export default function Shop() {
