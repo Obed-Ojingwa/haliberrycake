@@ -13,6 +13,8 @@ from slowapi.errors import RateLimitExceeded
 from app.core.config import settings
 from app.database.session import engine, Base
 from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic
+from app.api import site_settings 
+ 
 
 # ── Logging ──────────────────────────────────────────────────────
 logging.basicConfig(
@@ -59,6 +61,7 @@ app = FastAPI(
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.include_router(site_settings.router, prefix="/api/v1")
 
 # ── CORS (added ONCE) ─────────────────────────────────────────────
 app.add_middleware(
