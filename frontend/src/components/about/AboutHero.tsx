@@ -18,7 +18,7 @@ export default function AboutHero() {
   return (
     <section
       className="relative min-h-[70vh] flex items-end overflow-hidden"
-      style={{ background: 'linear-gradient(145deg, #7B3F56 0%, #DCA6C0 50%, #F4E6EA 100%)' }}
+      style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}
     >
       {/* Real portrait image fills the section when available */}
       {portraitUrl && (

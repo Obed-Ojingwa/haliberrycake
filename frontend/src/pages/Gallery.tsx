@@ -18,8 +18,9 @@ export default function Gallery() {
     <>
     <WhatsAppFloatButton />
       <section className="pt-32 pb-20 relative overflow-hidden"
-        style={{ background: 'linear-gradient(145deg,#7B3F56 0%,#DCA6C0 55%,#F4E6EA 100%)' }}>
+        style={{ background: 'linear-gradient(145deg,#F9C490 0%,#FBDBBB 55%,#FEF2E7 100%)' }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"
+        // Changed background gradient colors here, keeping the same general style
           style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #F2B6B8, transparent 65%)' }}/>
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <motion.div initial="hidden" animate="visible" className="space-y-4">
