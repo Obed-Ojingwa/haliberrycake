@@ -35,7 +35,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4"
       // style={{ background:'linear-gradient(135deg, #2C1810 0%, #52200E 55%, #7A3618 100%)' }}>
-      className="bg-white">
+      >
 
       {/* Ambient orb */}
       <div className="absolute top-0 right-0 w-96 h-96 opacity-15 blur-3xl pointer-events-none rounded-full"

@@ -70,94 +70,159 @@ export default function CIC() {
         </div>
       </section>
 
-      {/* HALIBERRY CIC Section */}
+      {/* Founder Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }} className="space-y-8">
-            {/* Title */}
-            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-center" style={{ fontSize:'clamp(2.5rem,6vw,4rem)', lineHeight:'1.2' }}>
-              HALIBERRY CIC<br/><span className="block font-sans font-light text-lg" style={{ color:'var(--peach)' }}>From Survival to Stability</span>
-            </motion.h1>
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }} className="space-y-6">
+            {/* Founder Header */}
+            <motion.h2 variants={fadeUp} className="font-serif font-bold text-center" style={{ fontSize:'clamp(2rem,5vw,3rem)', letterSpacing:'-0.5px' }}>
+              Founder
+            </motion.h2>
 
-            {/* Intro paragraph */}
-            <motion.p variants={fadeUp} className="font-sans font-light text-center max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-secondary)', fontSize:'1.05rem' }}>
-              Haliberry CIC is a women-led social enterprise based in London, dedicated to helping women rebuild confidence, develop practical skills and create new opportunities for themselves.
-            </motion.p>
-
-            {/* Founded */}
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+            {/* Founder Story */}
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed text-center" style={{ color:'var(--text-secondary)', fontSize:'1.1rem', lineHeight:'1.8' }}>
               Founded by Halimot Ogunnaike, Haliberry CIC was created to support women who have experienced trauma, displacement, abuse, isolation, financial hardship or other life challenges. We understand that rebuilding confidence takes time, support and opportunity.
             </motion.p>
 
             {/* Mission */}
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'1rem' }}>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed text-center" style={{ color:'var(--text-primary)', fontSize:'1.1rem', marginTop:'1.5rem', lineHeight:'1.7' }}>
               Our mission is to provide safe, inclusive and empowering spaces where women can learn, grow and move forward.
             </motion.p>
 
             {/* Who We Support */}
-            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
-              Who We Support
-            </motion.h2>
-            <motion.ul variants={fadeUp} className="list-disc pl-6 space-y-2 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
-              <li>Asylum seekers and refugees</li>
-              <li>Survivors of trafficking and modern slavery</li>
-              <li>Survivors of FGM/C</li>
-              <li>Women affected by domestic abuse</li>
-              <li>Women experiencing homelessness or financial hardship</li>
-              <li>Young adults and vulnerable women seeking support and opportunity</li>
-            </motion.ul>
+            <motion.div variants={fadeUp} className="max-w-2xl mx-auto">
+              <motion.h3 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.75rem', marginTop:'2rem', color:'var(--text-primary)' }}>
+                Who We Support
+              </motion.h3>
+              <motion.ul variants={fadeUp} className="list-none pl-0 space-y-3 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1.05rem' }}>
+                <motion.li key="1" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Asylum seekers and refugees</motion.span>
+                </motion.li>
+                <motion.li key="2" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Survivors of trafficking and modern slavery</motion.span>
+                </motion.li>
+                <motion.li key="3" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Survivors of FGM/C</motion.span>
+                </motion.li>
+                <motion.li key="4" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Women affected by domestic abuse</motion.span>
+                </motion.li>
+                <motion.li key="5" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Women experiencing homelessness or financial hardship</motion.span>
+                </motion.li>
+                <motion.li key="6" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <ArrowRight size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Young adults and vulnerable women seeking support and opportunity</motion.span>
+                </motion.li>
+              </motion.ul>
+            </motion.div>
 
             {/* What We Do */}
-            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
-              What We Do
-            </motion.h2>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
-              Through practical training and community programmes, we help women develop valuable skills, confidence and pathways towards independence.
-            </motion.p>
-            <motion.ol variants={fadeUp} className="list-decimal pl-6 space-y-2 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
-              <li>Baking and cake decorating training</li>
-              <li>Coffee and barista skills training</li>
-              <li>Confidence-building workshops</li>
-              <li>Community empowerment programmes</li>
-              <li>Employability and progression support</li>
-              <li>Mentoring and personal development opportunities</li>
-            </motion.ol>
+            <motion.div variants={fadeUp} className="max-w-2xl mx-auto">
+              <motion.h3 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.75rem', marginTop:'2.5rem', color:'var(--text-primary)' }}>
+                What We Do
+              </motion.h3>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'1rem' }}>
+                Through practical training and community programmes, we help women develop valuable skills, confidence and pathways towards independence.
+              </motion.p>
+              <motion.ol variants={fadeUp} className="list-none pl-0 space-y-3 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1.05rem' }}>
+                <motion.li key="1" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Baking and cake decorating training</motion.span>
+                </motion.li>
+                <motion.li key="2" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Coffee and barista skills training</motion.span>
+                </motion.li>
+                <motion.li key="3" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Confidence-building workshops</motion.span>
+                </motion.li>
+                <motion.li key="4" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Community empowerment programmes</motion.span>
+                </motion.li>
+                <motion.li key="5" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Employability and progression support</motion.span>
+                </motion.li>
+                <motion.li key="6" variants={fadeUp} className="flex items-start space-x-3">
+                  <motion.span variants={fadeUp} className="flex-shrink-0 mt-1">
+                    <Heart size={14} style={{ color:'var(--peach)' }}/>
+                  </motion.span>
+                  <motion.span variants={fadeUp}>Mentoring and personal development opportunities</motion.span>
+                </motion.li>
+              </motion.ol>
+            </motion.div>
 
             {/* Why We Do It */}
-            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
-              Why We Do It
-            </motion.h2>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
-              Too many women are expected to rebuild their lives without enough support, opportunity or confidence.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
-              At Haliberry CIC, we believe that lasting progress requires more than a one-off intervention. It requires safety, consistency, dignity, structure and time.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
-              We use baking, creativity and practical learning as tools for empowerment, helping women reconnect with their strengths, develop new skills and build hope for the future.
-            </motion.p>
+            <motion.div variants={fadeUp} className="max-w-2xl mx-auto">
+              <motion.h3 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.75rem', marginTop:'2.5rem', color:'var(--text-primary)' }}>
+                Why We Do It
+              </motion.h3>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                Too many women are expected to rebuild their lives without enough support, opportunity or confidence.
+              </motion.p>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                At Haliberry CIC, we believe that lasting progress requires more than a one-off intervention. It requires safety, consistency, dignity, structure and time.
+              </motion.p>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                We use baking, creativity and practical learning as tools for empowerment, helping women reconnect with their strengths, develop new skills and build hope for the future.
+              </motion.p>
+            </motion.div>
 
             {/* Our Vision */}
-            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
-              Our Vision
-            </motion.h2>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
-              We believe every woman deserves the opportunity to thrive, regardless of her background or circumstances.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
-              Our vision is a future where women have access to the skills, confidence, community and support they need to move from survival towards stability, independence and opportunity.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
-              At Haliberry CIC, we are building more than training programmes.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
-              We are building confidence, community and brighter futures.
-            </motion.p>
+            <motion.div variants={fadeUp} className="max-w-2xl mx-auto">
+              <motion.h3 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.75rem', marginTop:'2.5rem', color:'var(--text-primary)' }}>
+                Our Vision
+              </motion.h3>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                We believe every woman deserves the opportunity to thrive, regardless of her background or circumstances.
+              </motion.p>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                Our vision is a future where women have access to the skills, confidence, community and support they need to move from survival towards stability, independence and opportunity.
+              </motion.p>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0.75rem' }}>
+                At Haliberry CIC, we are building more than training programmes.
+              </motion.p>
+              <motion.p variants={fadeUp} className="font-sans font-light leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1.05rem', marginBottom:'0' }}>
+                We are building confidence, community and brighter futures.
+              </motion.p>
+            </motion.div>
 
             {/* Call to action */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-3 justify-center mt-8">
-              <Link to="/contact" className="btn-ghost">Get Involved</Link>
-              <a href="#programmes" className="btn-primary"><Heart size={16}/> Support Our Mission</a>
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center mt-10">
+              <Link to="/contact" className="btn-ghost px-8 py-3">Get Involved</Link>
+              <a href="#programmes" className="btn-primary px-8 py-3 flex items-center gap-2">
+                <Heart size={16} className="mb-0.5"/> Support Our Mission
+              </a>
             </motion.div>
           </motion.div>
         </div>
