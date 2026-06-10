@@ -27,22 +27,18 @@ export default function CIC() {
     <>
     <WhatsAppFloatButton />
       {/* Hero */}
-      <section className="pt-32 pb-20 relative overflow-hidden"
-      // Just changed background gradient colors here, keeping the same general style
-        style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}> 
-        <div className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{ backgroundImage:'radial-gradient(circle at 70% 40%, #F8A974, transparent 55%)' }}/>
+      <section className="pt-32 pb-20 relative overflow-hidden bg-white border-b border-black/10"> 
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-black/5"/>
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6">
             <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Community Interest Company</motion.span>
-            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-white"
+            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-black"
               style={{ fontSize:'clamp(2.5rem,6vw,4.5rem)', lineHeight:'1.08' }}>
-              Baking as a Path to<br/><em className="not-italic" style={{ color:'var(--peach)' }}>Healing &amp; Empowerment</em>
+              Haliberry CIC<br/><em className="not-italic" style={{ color:'var(--peach)' }}>From Survival to Stability</em>
             </motion.h1>
             <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto"
-              style={{ color:'rgba(255,255,255,0.65)', fontSize:'1.1rem', lineHeight:'1.75' }}>
-              Haliberry CIC uses the transformative power of baking to support women facing adversity in London —
-              building confidence, community, and independence one class at a time.
+              style={{ color:'rgba(0,0,0,0.65)', fontSize:'1.1rem', lineHeight:'1.75' }}>
+              Haliberry CIC is a women-led social enterprise based in London, dedicated to helping women rebuild confidence, develop practical skills and create new opportunities for themselves.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3 justify-center">
               <a href="#programmes" className="btn-primary"><Heart size={16}/> Support Our Mission</a>
@@ -63,8 +59,7 @@ export default function CIC() {
             variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }}>
             {IMPACT.map(({ icon, value, label })=>(
               <motion.div key={label} variants={fadeUp}
-                className="text-center rounded-2xl p-8"
-                style={{ background:'linear-gradient(160deg,#FDF7F2,#F2E8E1)', border:'1px solid var(--cream)' }}>
+                className="text-center rounded-2xl p-8 bg-white border border-gray-200">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{ background:'var(--apricot)', color:'var(--peach)' }}>{icon}</div>
                 <p className="font-serif font-bold mb-1" style={{ fontSize:'2.25rem', color:'var(--text-primary)' }}>{value}</p>
@@ -75,35 +70,96 @@ export default function CIC() {
         </div>
       </section>
 
-      {/* Our story */}
-      <section className="py-20" style={{ background:'linear-gradient(180deg,white 0%,#FDF7F2 100%)' }}>
+      {/* HALIBERRY CIC Section */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }} className="space-y-5">
-              <motion.span variants={fadeLeft} className="section-eyebrow block">Our Mission</motion.span>
-              <motion.h2 variants={fadeLeft} className="section-title">
-                Why We Started<br/><em className="not-italic" style={{ color:'var(--peach)' }}>Haliberry CIC</em>
-              </motion.h2>
-              {['Haliberry CIC was founded on the belief that creativity is medicine. Baking gave Halimot her own path back to confidence and joy — and she knew other women deserved that same experience.',
-                'We partner with domestic abuse shelters, women\'s refuges, mental health charities, and community centres across London — bringing free and subsidised baking workshops to women who need them most.',
-                'Our programmes are designed to build confidence, develop marketable skills, and create pathways toward financial independence and wellbeing. Every cake baked in our classes is a step forward.'
-              ].map((p,i)=>(
-                <motion.p key={i} variants={fadeLeft} className="font-sans font-light leading-relaxed"
-                  style={{ color: i===0 ? 'var(--text-primary)' : 'var(--text-secondary)', fontSize:'1.02rem' }}>{p}</motion.p>
-              ))}
-              <motion.div variants={fadeLeft}>
-                <Link to="/contact" className="btn-primary inline-flex">Get Involved <ArrowRight size={16}/></Link>
-              </motion.div>
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }} className="space-y-8">
+            {/* Title */}
+            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-center" style={{ fontSize:'clamp(2.5rem,6vw,4rem)', lineHeight:'1.2' }}>
+              HALIBERRY CIC<br/><span className="block font-sans font-light text-lg" style={{ color:'var(--peach)' }}>From Survival to Stability</span>
+            </motion.h1>
+
+            {/* Intro paragraph */}
+            <motion.p variants={fadeUp} className="font-sans font-light text-center max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-secondary)', fontSize:'1.05rem' }}>
+              Haliberry CIC is a women-led social enterprise based in London, dedicated to helping women rebuild confidence, develop practical skills and create new opportunities for themselves.
+            </motion.p>
+
+            {/* Founded */}
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              Founded by Halimot Ogunnaike, Haliberry CIC was created to support women who have experienced trauma, displacement, abuse, isolation, financial hardship or other life challenges. We understand that rebuilding confidence takes time, support and opportunity.
+            </motion.p>
+
+            {/* Mission */}
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'1rem' }}>
+              Our mission is to provide safe, inclusive and empowering spaces where women can learn, grow and move forward.
+            </motion.p>
+
+            {/* Who We Support */}
+            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
+              Who We Support
+            </motion.h2>
+            <motion.ul variants={fadeUp} className="list-disc pl-6 space-y-2 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              <li>Asylum seekers and refugees</li>
+              <li>Survivors of trafficking and modern slavery</li>
+              <li>Survivors of FGM/C</li>
+              <li>Women affected by domestic abuse</li>
+              <li>Women experiencing homelessness or financial hardship</li>
+              <li>Young adults and vulnerable women seeking support and opportunity</li>
+            </motion.ul>
+
+            {/* What We Do */}
+            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
+              What We Do
+            </motion.h2>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              Through practical training and community programmes, we help women develop valuable skills, confidence and pathways towards independence.
+            </motion.p>
+            <motion.ol variants={fadeUp} className="list-decimal pl-6 space-y-2 font-sans font-light" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              <li>Baking and cake decorating training</li>
+              <li>Coffee and barista skills training</li>
+              <li>Confidence-building workshops</li>
+              <li>Community empowerment programmes</li>
+              <li>Employability and progression support</li>
+              <li>Mentoring and personal development opportunities</li>
+            </motion.ol>
+
+            {/* Why We Do It */}
+            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
+              Why We Do It
+            </motion.h2>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              Too many women are expected to rebuild their lives without enough support, opportunity or confidence.
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
+              At Haliberry CIC, we believe that lasting progress requires more than a one-off intervention. It requires safety, consistency, dignity, structure and time.
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
+              We use baking, creativity and practical learning as tools for empowerment, helping women reconnect with their strengths, develop new skills and build hope for the future.
+            </motion.p>
+
+            {/* Our Vision */}
+            <motion.h2 variants={fadeUp} className="font-serif font-semibold text-left" style={{ fontSize:'1.5rem', marginTop:'2rem' }}>
+              Our Vision
+            </motion.h2>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem' }}>
+              We believe every woman deserves the opportunity to thrive, regardless of her background or circumstances.
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
+              Our vision is a future where women have access to the skills, confidence, community and support they need to move from survival towards stability, independence and opportunity.
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
+              At Haliberry CIC, we are building more than training programmes.
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-sans font-light max-w-2xl mx-auto leading-relaxed" style={{ color:'var(--text-primary)', fontSize:'1rem', marginTop:'0.5rem' }}>
+              We are building confidence, community and brighter futures.
+            </motion.p>
+
+            {/* Call to action */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3 justify-center mt-8">
+              <Link to="/contact" className="btn-ghost">Get Involved</Link>
+              <a href="#programmes" className="btn-primary"><Heart size={16}/> Support Our Mission</a>
             </motion.div>
-            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once:true }}
-              className="aspect-[4/5] rounded-[2rem] flex items-center justify-center"
-              style={{ background:'linear-gradient(135deg,var(--cream),var(--apricot),var(--blush))' }}>
-              <div className="text-center p-10">
-                <span className="text-8xl">🤝</span>
-                <p className="font-serif italic mt-4" style={{ color:'var(--text-muted)' }}>CIC photo / impact imagery</p>
-              </div>
-            </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -7,8 +7,7 @@ import { fadeUp, staggerContainer } from '@/lib/animations'
 export default function CTABanner() {
   return (
     <section
-      className="py-20 lg:py-28 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #FBD6B2 0%, #F8A974 50%, #F2B6B8 100%)' }}
+      className="py-20 lg:py-28 relative overflow-hidden bg-white border-b border-black/10"
     >
       {/* Decorative shapes */}
       <div
@@ -28,7 +27,7 @@ export default function CTABanner() {
           viewport={{ once: true, amount: 0.3 }}
           className="space-y-6"
         >
-          <motion.span variants={fadeUp} className="font-sans text-xs font-medium tracking-[0.22em] uppercase" style={{ color: 'white', opacity: 0.8 }}>
+          <motion.span variants={fadeUp} className="font-sans text-xs font-medium tracking-[0.22em] uppercase" style={{ color: 'rgba(0,0,0,0.8)' }}>
             Ready to Begin?
           </motion.span>
 
@@ -45,7 +44,7 @@ export default function CTABanner() {
           <motion.p
             variants={fadeUp}
             className="font-sans font-light mx-auto max-w-lg"
-            style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.7' }}
+            style={{ fontSize: '1.05rem', color: 'rgba(0,0,0,0.8)', lineHeight: '1.7' }}
           >
             Whether you're planning a wedding, a birthday, or simply want to learn the art of baking —
             Haliberry Cake is here to make it magical.
@@ -67,7 +66,7 @@ export default function CTABanner() {
             <Link
               to="/cake-classes"
               className="inline-flex items-center gap-2 font-sans font-medium text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
-              style={{ border: '2px solid rgba(255,255,255,0.7)', color: 'white' }}
+              style={{ border: '2px solid rgba(0,0,0,0.7)', color: 'var(--text-secondary)' }}
             >
               <BookOpen size={16} />
               Book a Baking Class

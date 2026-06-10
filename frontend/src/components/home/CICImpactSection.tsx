@@ -14,13 +14,11 @@ const STATS = [
 export default function CICImpactSection() {
   return (
     <section
-      className="py-24 lg:py-36 overflow-hidden relative"
-      style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}
+      className="py-24 lg:py-36 overflow-hidden relative bg-white"
     >
       {/* Ambient orb */}
       <div
-        className="absolute top-1/2 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #F8A974, transparent 70%)', transform: 'translate(40%, -50%)' }}
+        className="absolute top-1/2 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl pointer-events-none bg-black/5"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,10 +38,10 @@ export default function CICImpactSection() {
 
             <motion.h2
               variants={fadeLeft}
-              className="font-serif font-semibold text-white"
+              className="font-serif font-semibold text-black"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: '1.1' }}
             >
-              Baking as a Path to
+              Hiiiiiiiiiiiiiiiii
               <br />
               <em className="not-italic" style={{ color: 'var(--peach)' }}>Healing & Empowerment</em>
             </motion.h2>

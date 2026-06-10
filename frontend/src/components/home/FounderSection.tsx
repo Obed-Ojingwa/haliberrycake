@@ -36,7 +36,7 @@ export default function FounderSection() {
             {/* Main image card */}
             <div
               className="relative aspect-[4/5] rounded-[2rem] overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, var(--cream) 0%, var(--apricot) 100%)' }}
+              style={{ background: 'var(--cream)' }}
             >
               {portraitUrl ? (
                 <img

@@ -8,22 +8,26 @@
 
 /* ─── Brand CSS Custom Properties ───────────────────────────────── */
 :root {
-  --peach:       #F8A974;
-  --apricot:     #FBD6B2;
-  --blush:       #F2B6B8;
-  --petal:       #F8A974;
-  --golden:      #F6E2B5;
-  --cream:       #F2E8E1;
-  --cream-white: #FDF7F2;
+  /* ----- Backgrounds (now white/very-light) ----- */
+  --cream:       #FFFFFF;
+  --cream-white:#FFFFFF;
+  --apricot:     #FFFFFF;
+  --peach:       #000000;
+  --blush:       #000000;
+  --petal:       #FFFFFF;
+  --golden:      #FFFFFF;
 
-  --text-primary:   #2C1810;
-  --text-secondary: #8c6859;
-  --text-muted:     #A0795A;
-  --text-light:     #C4A592;
+  /* ----- Text colours (now black/gray) ----- */
+  --text-primary:   #000000;
+  --text-secondary:#111111;
+  --text-muted:     #222222;
+  --text-light:     #333333;
 
-  --shadow-luxury: 0 8px 40px rgba(248, 169, 116, 0.12), 0 2px 12px rgba(0,0,0,0.06);
-  --shadow-luxury-lg: 0 20px 60px rgba(248, 169, 116, 0.18), 0 4px 20px rgba(0,0,0,0.08);
+  /* ----- Shadows – keep them subtle so they don’t re‑introduce colour ----- */
+  --shadow-luxury: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-luxury-lg:0 8px 20px rgba(0,0,0,0.12);
 
+  /* ----- Transitions ----- */
   --transition-base: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -132,15 +136,15 @@ a {
 
   .btn-ghost {
     @apply inline-flex items-center gap-2 px-5 py-3 rounded-full font-sans font-medium text-sm tracking-wide;
-    color: white;
-    border: 1.5px solid rgba(255,255,255,0.6);
-    background: rgba(255,255,255,0.08);
+    color: rgb(36, 35, 2);
+    border: 1.5px solid rgba(112, 3, 3, 0.6);
+    background: rgba(88, 20, 20, 0.08);
     backdrop-filter: blur(8px);
     transition: var(--transition-base);
   }
   .btn-ghost:hover {
-    background: rgba(255,255,255,0.18);
-    border-color: rgba(255,255,255,0.9);
+    background: rgba(206, 3, 3, 0.18);
+    border-color: rgba(204, 29, 29, 0.9);
   }
 
   /* Section Headings */

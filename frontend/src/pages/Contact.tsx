@@ -40,7 +40,7 @@ export default function Contact() {
   })
 
   const inputBase = "w-full px-4 py-3 rounded-xl font-sans text-sm outline-none transition-colors"
-  const inputStyle = { background:'#FDF7F2', color:'var(--text-primary)' }
+  const inputStyle = { background:'white', color:'var(--text-primary)' }
   const fieldCls = (err?: {message?:string}) =>
     `${inputBase} border focus:border-[var(--peach)] ${err ? 'border-red-400' : 'border-[#E0D0C5]'}`
 
@@ -48,17 +48,15 @@ export default function Contact() {
     <>
     <WhatsAppFloatButton />
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden"
-      // changed background gradient colors here, keeping the same general style
-        style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}>
+      <section className="pt-32 pb-16 relative overflow-hidden bg-white">
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
             <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Get in Touch</motion.span>
-            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-white"
+            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-black"
               style={{ fontSize:'clamp(2.5rem,6vw,4.5rem)', lineHeight:'1.08' }}>
               Let's Create Something <em className="not-italic" style={{ color:'var(--peach)' }}>Together</em>
             </motion.h1>
-            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color:'rgba(255,255,255,0.65)', fontSize:'1.05rem' }}>
+            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color:'rgba(0,0,0,0.65)', fontSize:'1.05rem' }}>
               Whether it's a wedding cake, a class booking, or a general hello — we'd love to hear from you.
             </motion.p>
           </motion.div>
@@ -69,7 +67,7 @@ export default function Contact() {
         </svg>
       </section>
 
-      <section className="py-20" style={{ background:'linear-gradient(180deg,white 0%,#FDF7F2 100%)' }}>
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-14">
 

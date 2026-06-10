@@ -39,14 +39,13 @@ export default function Shop() {
 
       {/* ── Page Hero ─────────────────────────────────────────── */}
       <section
-        className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 text-center overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #FDF7F2 0%, #FFF8F4 50%, white 100%)' }}
+        className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 text-center overflow-hidden bg-white border-b border-black/10"
       >
         {/* Decorative orb */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse, rgba(248,169,116,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse, rgba(0,0,0,0.02) 0%, transparent 70%)',
             filter: 'blur(40px)',
           }}
         />

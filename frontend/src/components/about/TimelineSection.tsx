@@ -49,7 +49,7 @@ const TIMELINE = [
 
 export default function TimelineSection() {
   return (
-    <section className="py-24 lg:py-32" style={{ background: 'linear-gradient(180deg, white 0%, #FDF7F2 100%)' }}>
+    <section className="py-24 lg:py-32 bg-white border-t border-black/10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -72,7 +72,7 @@ export default function TimelineSection() {
           {/* Vertical line */}
           <div
             className="absolute left-5 lg:left-1/2 top-0 bottom-0 w-px"
-            style={{ background: 'linear-gradient(to bottom, var(--apricot), var(--blush), var(--apricot))', transform: 'translateX(-50%)' }}
+            style={{ background: 'rgba(0,0,0,0.03)', transform: 'translateX(-50%)' }}
           />
 
           <div className="space-y-10">

@@ -30,16 +30,16 @@ export default function AdminLogin() {
     },
   })
 
-  const inputStyle = { background:'#FDF7F2', color:'var(--text-primary)', border:'1.5px solid #E0D0C5' }
+  const inputStyle = { background:'white', color:'var(--text-primary)', border:'1.5px solid #E0D0C5' }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4"
       // style={{ background:'linear-gradient(135deg, #2C1810 0%, #52200E 55%, #7A3618 100%)' }}>
-      style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}>
+      className="bg-white">
 
       {/* Ambient orb */}
       <div className="absolute top-0 right-0 w-96 h-96 opacity-15 blur-3xl pointer-events-none rounded-full"
-        style={{ background:'radial-gradient(circle, #F8A974, transparent 70%)', transform:'translate(30%,-30%)' }}/>
+        style={{ background:'radial-gradient(circle, rgba(0,0,0,0.02), transparent 70%)', transform:'translate(30%,-30%)' }}/>
 
       <motion.div
         className="w-full max-w-md rounded-[2rem] overflow-hidden shadow-luxury-lg"
@@ -48,7 +48,7 @@ export default function AdminLogin() {
         transition={{ duration:0.55, ease:[0.25,0.46,0.45,0.94] }}
       >
         {/* Header */}
-        <div className="px-10 pt-10 pb-7 text-center" style={{ background:'linear-gradient(135deg,#FDF7F2,#FBD6B2)' }}>
+        <div className="px-10 pt-10 pb-7 text-center" style={{ background:'white' }}>
           <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"
             style={{ background:'var(--peach)' }}>
             <Lock size={22} color="white"/>
@@ -62,7 +62,7 @@ export default function AdminLogin() {
         {/* Form */}
         <div className="px-10 py-8">
           {isError && (
-            <div className="mb-5 p-4 rounded-xl font-sans text-sm text-red-700 space-y-1" style={{ background:'#FEE2E2' }}>
+            <div className="mb-5 p-4 rounded-xl font-sans text-sm text-red-700 space-y-1" style={{ background:'#F5F5F5' }}>
               <p className="font-semibold">
                 {(error as { response?:{data?:{detail?:string}} })?.response?.data?.detail ?? 'Login failed'}
               </p>
@@ -145,7 +145,7 @@ export default function AdminLogin() {
 //     },
 //   })
 
-//   const inputStyle = { background:'#FDF7F2', color:'var(--text-primary)', border:'1.5px solid #E0D0C5' }
+//   const inputStyle = { background:'white', color:'var(--text-primary)', border:'1.5px solid #E0D0C5' }
 
 //   return (
 //     <div className="min-h-screen flex items-center justify-center px-4"
@@ -162,7 +162,7 @@ export default function AdminLogin() {
 //         transition={{ duration:0.55, ease:[0.25,0.46,0.45,0.94] }}
 //       >
 //         {/* Header */}
-//         <div className="px-10 pt-10 pb-7 text-center" style={{ background:'linear-gradient(135deg,#FDF7F2,#FBD6B2)' }}>
+//         <div className="px-10 pt-10 pb-7 text-center" style={{ background:'white' }}>
 //           <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"
 //             style={{ background:'var(--peach)' }}>
 //             <Lock size={22} color="white"/>

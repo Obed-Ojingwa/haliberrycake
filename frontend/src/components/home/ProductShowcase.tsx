@@ -59,7 +59,7 @@ const CATEGORIES = [
 
 export default function ProductShowcase() {
   return (
-    <section className="py-24 lg:py-36" style={{ background: 'linear-gradient(180deg, white 0%, #FDF7F2 100%)' }}>
+    <section className="py-24 lg:py-36" style={{ background: 'white' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -102,7 +102,7 @@ export default function ProductShowcase() {
                 {/* Card image area */}
                 <div
                   className="aspect-[4/3] flex flex-col items-center justify-center relative overflow-hidden"
-                  style={{ background: `linear-gradient(135deg, ${cat.from}, ${cat.to})` }}
+                  style={{ background: 'white' }}
                 >
                   <span
                     className="text-6xl transition-transform duration-500 group-hover:scale-110"
@@ -114,7 +114,7 @@ export default function ProductShowcase() {
                   {/* Hover overlay */}
                   <div
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    style={{ background: 'rgba(44, 24, 16, 0.55)' }}
+                    style={{ background: 'rgba(0,0,0,0.55)' }}
                   >
                     <span className="btn-ghost text-xs py-2 px-5">
                       View Collection
@@ -152,7 +152,7 @@ export default function ProductShowcase() {
             <Link
               to="/shop"
               className="flex flex-col items-center justify-center text-center h-full min-h-[280px] p-8"
-              style={{ background: 'linear-gradient(135deg, #FDF7F2, #F2E8E1)' }}
+              style={{ background: 'white' }}
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"

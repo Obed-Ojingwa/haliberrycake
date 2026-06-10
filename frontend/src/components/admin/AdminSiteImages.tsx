@@ -91,7 +91,7 @@ function SiteImageCard({ setting }: { setting: SiteSetting }) {
         style={{
           background: displayUrl
             ? 'black'
-            : 'linear-gradient(135deg, var(--cream) 0%, var(--apricot) 100%)',
+            : 'var(--cream)',
         }}
         onClick={() => inputRef.current?.click()}
       >
@@ -113,7 +113,7 @@ function SiteImageCard({ setting }: { setting: SiteSetting }) {
         {/* Hover upload overlay */}
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-          style={{ background: 'rgba(44,24,16,0.55)' }}
+          style={{ background: 'rgba(0,0,0,0.55)' }}
         >
           {upload.isPending ? (
             <Loader2 size={28} className="text-white animate-spin" />
@@ -139,7 +139,7 @@ function SiteImageCard({ setting }: { setting: SiteSetting }) {
         {/* Upload spinner overlay */}
         {upload.isPending && (
           <div className="absolute inset-0 flex items-center justify-center"
-            style={{ background: 'rgba(44,24,16,0.4)' }}>
+            style={{ background: 'rgba(0,0,0,0.4)' }}>
             <Loader2 size={32} className="text-white animate-spin" />
           </div>
         )}

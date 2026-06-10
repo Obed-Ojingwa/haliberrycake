@@ -5,11 +5,11 @@ import type { Product } from '@/types'
 import { fadeUp } from '@/lib/animations'
 
 const CATEGORY_COLOURS: Record<string, string> = {
-  wedding:  'linear-gradient(135deg, #FBD6B2, #F8A974)',
-  birthday: 'linear-gradient(135deg, #F2B6B8, #F8A974)',
-  cupcakes: 'linear-gradient(135deg, #F6E2B5, #FBD6B2)',
-  desserts: 'linear-gradient(135deg, #F2E8E1, #F6E2B5)',   // was dessert_boxes
-  treats:   'linear-gradient(135deg, #FBD6B2, #F2B6B8)',   // was luxury_treats
+  wedding:  'var(--cream)',
+  birthday: 'var(--cream)',
+  cupcakes: 'var(--cream)',
+  desserts: 'var(--cream)',   // was dessert_boxes
+  treats:   'var(--cream)',   // was luxury_treats
 }
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -34,7 +34,7 @@ interface Props {
 }
 
 export default function ProductCard({ product, onInquire }: Props) {
-  const bg = CATEGORY_COLOURS[product.category] ?? 'linear-gradient(135deg, #FBD6B2, #F8A974)'
+  const bg = CATEGORY_COLOURS[product.category] ?? 'var(--cream)'
   const emoji = CATEGORY_EMOJI[product.category] ?? '🎂'
 
   return (
@@ -70,7 +70,7 @@ export default function ProductCard({ product, onInquire }: Props) {
         {/* Hover overlay */}
         <div
           className="absolute inset-0 flex items-end justify-center pb-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: 'linear-gradient(to top, rgba(44,24,16,0.7) 0%, transparent 60%)' }}
+          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)' }}
         >
           <button
             onClick={() => onInquire(product)}

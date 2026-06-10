@@ -9,8 +9,7 @@ export default function AboutCTA() {
     <section className="py-24 lg:py-32" style={{ background: 'white' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="rounded-[2.5rem] p-10 lg:p-16 text-center overflow-hidden relative"
-          style={{ background: 'linear-gradient(135deg, #FBD6B2 0%, #F8A974 50%, #F2B6B8 100%)' }}
+          className="rounded-[2.5rem] p-10 lg:p-16 text-center overflow-hidden relative bg-white"
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -22,14 +21,14 @@ export default function AboutCTA() {
 
           <div className="relative z-10 max-w-2xl mx-auto">
             <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-6">
-              <motion.span variants={fadeUp} className="font-sans text-xs font-medium tracking-[0.22em] uppercase text-white opacity-80">
+              <motion.span variants={fadeUp} className="font-sans text-xs font-medium tracking-[0.22em] uppercase text-black/80">
                 Be Part of the Story
               </motion.span>
-              <motion.h2 variants={fadeUp} className="font-serif font-semibold text-white" style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)', lineHeight: '1.1' }}>
+              <motion.h2 variants={fadeUp} className="font-serif font-semibold text-black" style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)', lineHeight: '1.1' }}>
                 Your Celebration Deserves
                 <br />Something Extraordinary
               </motion.h2>
-              <motion.p variants={fadeUp} className="font-sans font-light text-white/80" style={{ fontSize: '1.05rem', lineHeight: '1.75' }}>
+              <motion.p variants={fadeUp} className="font-sans font-light text-black/80" style={{ fontSize: '1.05rem', lineHeight: '1.75' }}>
                 Whether you want a show-stopping cake or the confidence to bake your own... 
                 Halimot and the Haliberry team are here for you.
               </motion.p>
@@ -44,14 +43,14 @@ export default function AboutCTA() {
                 <Link
                   to="/cake-classes"
                   className="inline-flex items-center gap-2 font-sans font-medium text-sm px-7 py-3.5 rounded-full transition-all hover:-translate-y-0.5"
-                  style={{ border: '2px solid rgba(255,255,255,0.7)', color: 'white' }}
+                  style={{ border: '2px solid rgba(0,0,0,0.7)', color: 'var(--text-secondary)' }}
                 >
                   <BookOpen size={16} /> Book a Class
                 </Link>
                 <Link
                   to="/cic"
                   className="inline-flex items-center gap-2 font-sans font-medium text-sm px-7 py-3.5 rounded-full transition-all hover:-translate-y-0.5"
-                  style={{ border: '2px solid rgba(255,255,255,0.7)', color: 'white' }}
+                  style={{ border: '2px solid rgba(0,0,0,0.7)', color: 'var(--text-secondary)' }}
                 >
                   <Heart size={16} /> Support the CIC
                 </Link>

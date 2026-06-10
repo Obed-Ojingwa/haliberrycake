@@ -149,24 +149,22 @@ export default function CakeClasses() {
   return (
     <>
     <WhatsAppFloatButton />
-      <section className="pt-32 pb-20 relative overflow-hidden"
-      // Changed the color - Grad to something #FBD6B2
-        style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}>
-        <div className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{ backgroundImage:'radial-gradient(circle at 75% 50%, #F2B6B8, transparent 55%)' }}/>
+      <section className="pt-32 pb-20 relative overflow-hidden bg-white border-b border-black/10">
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-black/5"/>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-5">
             <motion.span variants={fadeLeft} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Baking Classes · London</motion.span>
-            <motion.h1 variants={fadeLeft} className="font-serif font-semibold text-white"
-              style={{ fontSize:'clamp(2.25rem,5vw,4rem)', lineHeight:'1.1' }}>
-              Learn the Art of<br/><em className="not-italic" style={{ color:'var(--peach)' }}>Beautiful Baking</em>
+            <motion.h1 variants={fadeLeft} className="font-serif font-semibold text-black"
+              style={{ fontSize:'clamp(2.25rem,5vw,4rem)', lineHeight:'1.1'}}>
+              Learn the Art of<br/><em className="not-italic" style={{ color:'rgba(0, 0, 0, 0.65)' }}>Beautiful Baking</em>
             </motion.h1>
-            <motion.p variants={fadeLeft} className="font-sans font-light" style={{ color:'rgba(255,255,255,0.65)', fontSize:'1.05rem', lineHeight:'1.75' }}>
+            <motion.p variants={fadeLeft} className="font-sans font-light" style={{ color:'rgba(0, 0, 0, 0.65)', fontSize:'1.05rem', lineHeight:'1.75' }}>
               From beginner to confident baker — intimate London classes teaching real skills in a warm, empowering space.
             </motion.p>
             <motion.div variants={fadeLeft} className="flex flex-wrap gap-3">
               <a href="#classes" className="btn-primary">Browse Classes</a>
-              <a href="/contact" className="btn-ghost">Private Classes Available</a>
+              <a href="/contact" className="btn-primary">Private Classes Available
+              </a>
             </motion.div>
           </motion.div>
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="hidden lg:grid grid-cols-2 gap-4">
@@ -174,7 +172,7 @@ export default function CakeClasses() {
               <motion.div key={l} variants={fadeRight} className="rounded-2xl p-6 text-center"
                 style={{ background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)' }}>
                 <p className="font-serif font-bold mb-1" style={{ fontSize:'2rem', color:'var(--peach)' }}>{v}</p>
-                <p className="font-sans text-xs" style={{ color:'rgba(255,255,255,0.5)' }}>{l}</p>
+                <p className="font-sans text-xs" style={{ color:'rgba(217, 171, 18, 0.5)' }}>{l}</p>
               </motion.div>
             ))}
           </motion.div>

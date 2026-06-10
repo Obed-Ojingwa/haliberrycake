@@ -9,11 +9,11 @@ import type { GalleryItem } from '@/types'
 
 // Fallback gradients used when image_url is null or image fails to load
 const FALLBACK_GRADIENTS = [
-  'linear-gradient(135deg, #F8A974, #FBD6B2)',
-  'linear-gradient(135deg, #F2B6B8, #F8A974)',
-  'linear-gradient(135deg, #F6E2B5, #FBD6B2)',
-  'linear-gradient(135deg, #F2E8E1, #F6E2B5)',
-  'linear-gradient(135deg, #FBD6B2, #F2B6B8)',
+  'white',
+  'white',
+  'white',
+  'white',
+  'white',
 ]
 
 // Grid span classes — mirrors the original layout
@@ -35,7 +35,7 @@ export default function GalleryPreview() {
   const items: (GalleryItem | null)[] = [...raw, ...Array(Math.max(0, 5 - raw.length)).fill(null)]
 
   return (
-    <section className="py-24 lg:py-32" style={{ background: 'linear-gradient(180deg, #FDF7F2 0%, white 100%)' }}>
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -97,7 +97,7 @@ export default function GalleryPreview() {
                 {/* Hover overlay */}
                 <div
                   className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-                  style={{ background: 'rgba(44, 24, 16, 0.55)' }}
+                  style={{ background: 'rgba(0,0,0,0.55)' }}
                 >
                   <Instagram size={22} color="white" className="mb-2" />
                   <p className="font-sans text-xs text-white tracking-wide">{label}</p>
@@ -204,7 +204,7 @@ export default function GalleryPreview() {
 //               {/* Hover overlay */}
 //               <div
 //                 className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-//                 style={{ background: 'rgba(44, 24, 16, 0.55)' }}
+//                 style={{ background: 'rgba(0,0,0,0.55)' }}
 //               >
 //                 <Instagram size={22} color="white" className="mb-2" />
 //                 <p className="font-sans text-xs text-white tracking-wide">{item.label}</p>

@@ -8,22 +8,22 @@ const VALUES = [
     icon: <Heart size={24} />,
     title: 'Made with Love',
     description: 'Every cake is crafted with genuine care and emotional investment. Baking is our love language.',
-    bg: 'var(--blush)',
-    color: '#D9898C',
+    bg: 'var(--cream)',
+    color: 'var(--text-primary)',
   },
   {
     icon: <Star size={24} />,
     title: 'Uncompromising Quality',
     description: 'We use only the finest ingredients — locally sourced where possible — and never cut corners on artistry.',
-    bg: 'var(--apricot)',
-    color: 'var(--peach)',
+    bg: 'var(--cream)',
+    color: 'var(--text-secondary)',
   },
   {
     icon: <Sparkles size={24} />,
     title: 'Creativity as Medicine',
     description: 'We believe the act of creating is healing. Baking taught us this — and we pass it on through every class.',
-    bg: 'var(--golden)',
-    color: '#D4BA7A',
+    bg: 'var(--cream)',
+    color: 'var(--text-primary)',
   },
   {
     icon: <Users size={24} />,
@@ -36,23 +36,22 @@ const VALUES = [
     icon: <Leaf size={24} />,
     title: 'Thoughtful Sourcing',
     description: 'From free-range eggs to fairtrade chocolate — we care about where our ingredients come from.',
-    bg: '#E8F5E9',
-    color: '#4CAF50',
+    bg: 'var(--cream)',
+    color: 'var(--text-primary)',
   },
   {
     icon: <Shield size={24} />,
     title: 'Trust & Transparency',
     description: 'We honour every commitment. Delivery times, pricing, ingredients — always clear, always honest.',
-    bg: '#E3F2FD',
-    color: '#1976D2',
+    bg: 'var(--cream)',
+    color: 'var(--text-secondary)',
   },
 ]
 
 export default function ValuesSection() {
   return (
     <section
-      className="py-24 lg:py-32"
-      style={{ background: 'linear-gradient(135deg, #2C1810 0%, #52200E 60%, #7A3618 100%)' }}
+      className="py-24 lg:py-32 bg-white border-t border-black/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -104,10 +103,10 @@ export default function ValuesSection() {
                 {icon}
               </div>
               <div>
-                <h3 className="font-serif font-semibold text-white mb-2" style={{ fontSize: '1.15rem' }}>
+                <h3 className="font-serif font-semibold text-black mb-2" style={{ fontSize: '1.15rem' }}>
                   {title}
                 </h3>
-                <p className="font-sans text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: 'rgba(0,0,0,0.55)' }}>
                   {description}
                 </p>
               </div>

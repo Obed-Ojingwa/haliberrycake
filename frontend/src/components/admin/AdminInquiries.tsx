@@ -122,17 +122,17 @@ function InquiryRow({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      className="flex items-start gap-4 p-5 cursor-pointer hover:bg-[#FDF7F2] transition-colors group rounded-2xl"
+      className="flex items-start gap-4 p-5 cursor-pointer hover:bg-[rgba(0,0,0,0.02)] transition-colors group rounded-2xl"
       style={{
         border: '1px solid var(--cream)',
-        background: inquiry.is_read ? 'white' : 'linear-gradient(135deg,#FDF7F2,#FFF8F4)',
+        background: inquiry.is_read ? 'white' : 'rgba(0,0,0,0.02)',
       }}
       onClick={() => onOpen(inquiry)}
     >
       {/* Icon */}
       <div
         className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-        style={{ background: inquiry.is_read ? 'var(--cream)' : 'var(--apricot)' }}
+        style={{ background: inquiry.is_read ? 'var(--cream)' : 'rgba(0,0,0,0.02)' }}
       >
         {inquiry.is_read
           ? <MailOpen size={16} style={{ color: 'var(--text-muted)' }} />

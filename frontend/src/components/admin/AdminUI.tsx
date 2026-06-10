@@ -133,7 +133,7 @@ export function AdminDrawer({ open, title, onClose, children }: {
             {/* Drawer header */}
             <div
               className="flex items-center justify-between px-6 py-5 flex-shrink-0"
-              style={{ borderBottom: '1px solid var(--cream)', background: 'linear-gradient(135deg,#FDF7F2,#FBD6B2)' }}
+              style={{ borderBottom: '1px solid var(--cream)', background: 'white' }}
             >
               <h2 className="font-serif font-semibold text-[var(--text-primary)]" style={{ fontSize: '1.25rem' }}>
                 {title}

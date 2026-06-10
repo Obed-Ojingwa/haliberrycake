@@ -124,7 +124,7 @@ export default function HaliberryCICSection() {
                   ) : (
                     <div
                       className="absolute inset-0 flex flex-col items-center justify-center gap-2"
-                      style={{ background: 'linear-gradient(135deg, var(--cream) 0%, var(--apricot) 100%)' }}
+                      style={{ background: 'var(--cream)' }}
                     >
                       <span className="text-4xl">❤️</span>
                       <p className="font-sans text-xs text-center px-4" style={{ color: 'var(--text-muted)' }}>

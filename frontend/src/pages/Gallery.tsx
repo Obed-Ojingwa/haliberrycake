@@ -17,19 +17,18 @@ export default function Gallery() {
   return (
     <>
     <WhatsAppFloatButton />
-      <section className="pt-32 pb-20 relative overflow-hidden"
-        style={{ background: 'linear-gradient(145deg,#F9C490 0%,#FBDBBB 55%,#FEF2E7 100%)' }}>
+      <section className="pt-32 pb-20 relative overflow-hidden bg-white border-b border-black/10">
         <div className="absolute inset-0 opacity-10 pointer-events-none"
         // Changed background gradient colors here, keeping the same general style
-          style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #F2B6B8, transparent 65%)' }}/>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.05), transparent 65%)' }}/>
+        <div className="relative min-h-[2vh] flex items-center overflow-hidden bg-white shadow-lg">
           <motion.div initial="hidden" animate="visible" className="space-y-4">
             <motion.span className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color: 'var(--peach)' }}>Our Work</motion.span>
-            <motion.h1 className="font-serif font-semibold text-white"
+            <motion.h1 className="font-serif font-semibold text-black"
               style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)', lineHeight: '1.08' }}>
               Gallery<br/><em className="not-italic" style={{ color: 'var(--peach)' }}>Of Creations</em>
             </motion.h1>
-            <motion.p className="font-sans font-light" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem' }}>
+            <motion.p className="font-sans font-light" style={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.05rem' }}>
               A showcase of our custom cakes, baking classes, and community moments.
             </motion.p>
           </motion.div>
@@ -40,7 +39,7 @@ export default function Gallery() {
         </svg>
       </section>
 
-      <section className="py-20" style={{ background: 'linear-gradient(180deg,#FDF7F2 0%,white 100%)' }}>
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="text-center max-w-xl mx-auto mb-14" initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.span className="section-eyebrow block mb-3">Featured</motion.span>
@@ -111,7 +110,7 @@ export default function Gallery() {
               { icon: <LucideImage className="w-8 h-8"/>, label: 'Corporate Events', count: 8 }
             ].map(({ icon, label, count }) => (
               <motion.div key={label} className="flex items-center gap-3 p-6 rounded-xl border"
-                style={{ background: 'var(--cream)', border: '1px solid var(--apricot)' }}>
+                style={{ background: 'var(--cream)', border: '1px solid rgba(0,0,0,0.1)' }}>
                 <div className="flex-shrink-0">
                   {icon}
                 </div>

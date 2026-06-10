@@ -9,7 +9,7 @@ import type { Testimonial } from '@/types'
 import CTABanner from '@/components/home/CTABanner'
 import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
-const ACCENT_COLOURS = ['var(--peach)','var(--blush)','var(--golden)','var(--apricot)']
+const ACCENT_COLOURS = ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0']
 
 const STATIC_REVIEWS: Testimonial[] = [
   { id:1, customer_name:'Amara Johnson',  message:'The most breathtaking wedding cake. Every guest was stunned before they even tasted it, and the taste was pure perfection.', image_url:null, rating:5, created_at:'' },
@@ -37,16 +37,15 @@ export default function Testimonials() {
         <meta property="og:title" content="Client Reviews — Haliberry Cake London" />
         <link rel="canonical" href="https://haliberrycake.co.uk/testimonials" /> {/* Check on this --- I will change this later*/}  
       </Helmet>
-      <section className="pt-32 pb-16 relative overflow-hidden"
-        style={{ background:'linear-gradient(145deg,#2C1810 0%,#52200E 55%,#7A3618 100%)' }}>
+      <section className="pt-32 pb-16 relative overflow-hidden bg-white border-b border-black/10">
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
             <motion.span variants={fadeUp} className="font-sans text-xs tracking-[0.22em] uppercase block" style={{ color:'var(--peach)' }}>Kind Words</motion.span>
-            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-white"
+            <motion.h1 variants={fadeUp} className="font-serif font-semibold text-black"
               style={{ fontSize:'clamp(2.5rem,6vw,4.5rem)', lineHeight:'1.08' }}>
               What Our Clients <em className="not-italic" style={{ color:'var(--peach)' }}>Say</em>
             </motion.h1>
-            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color:'rgba(255,255,255,0.65)', fontSize:'1.05rem' }}>
+            <motion.p variants={fadeUp} className="font-sans font-light" style={{ color:'rgba(0,0,0,0.65)', fontSize:'1.05rem' }}>
               Every review is a story. These are the moments that matter most to us.
             </motion.p>
           </motion.div>
@@ -70,7 +69,7 @@ export default function Testimonials() {
       </section>
 
       {/* Grid */}
-      <section className="py-16" style={{ background:'linear-gradient(180deg,white 0%,#FDF7F2 100%)' }}>
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true, amount:0.05 }}>
@@ -90,7 +89,7 @@ export default function Testimonials() {
                   "{r.message}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-sans font-semibold text-xs flex-shrink-0 text-white"
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-sans font-semibold text-xs flex-shrink-0 text-black"
                     style={{ background: ACCENT_COLOURS[idx % ACCENT_COLOURS.length] }}>
                     {r.customer_name.split(' ').map(n=>n[0]).join('').slice(0,2)}
                   </div>
@@ -120,7 +119,7 @@ export default function Testimonials() {
 // import type { Testimonial } from '@/types'
 // import CTABanner from '@/components/home/CTABanner'
 
-// const ACCENT_COLOURS = ['var(--peach)','var(--blush)','var(--golden)','var(--apricot)']
+// const ACCENT_COLOURS = ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0']
 
 // const STATIC_REVIEWS: Testimonial[] = [
 //   { id:1, customer_name:'Amara Johnson',  message:'The most breathtaking wedding cake. Every guest was stunned before they even tasted it — and the taste was pure perfection.', image_url:null, rating:5, created_at:'' },

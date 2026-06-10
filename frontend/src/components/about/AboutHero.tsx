@@ -17,9 +17,9 @@ export default function AboutHero() {
 
   return (
     <section
-      className="relative min-h-[70vh] flex items-end overflow-hidden"
-      style={{ background:'linear-gradient(145deg,#F9C490 0%,#FBD6B2 55%,#FEF2E7 100%)' }}
-    >
+  className="relative min-h-[70vh] flex items-end overflow-hidden bg-white bg-[url('/img/dot-pattern.png')] bg-[size:20px_20px]"
+>
+
       {/* Real portrait image fills the section when available */}
       {portraitUrl && (
         <div className="absolute inset-0">
@@ -32,7 +32,7 @@ export default function AboutHero() {
           {/* Dark gradient overlay so text stays readable */}
           <div
             className="absolute inset-0"
-            style={{ background: 'linear-gradient(to top, rgba(44,24,16,0.72) 0%, rgba(44,24,16,0.25) 50%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }}
           />
         </div>
       )}
@@ -40,11 +40,11 @@ export default function AboutHero() {
       {/* Ambient orbs — shown whether or not image is present */}
       <div
         className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-15 blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #F8A974, transparent 70%)', transform: 'translate(30%,-30%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.02), transparent 70%)', transform: 'translate(30%,-30%)' }}
       />
       <div
         className="absolute bottom-0 left-1/3 w-[360px] h-[360px] rounded-full opacity-10 blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #F2B6B8, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.02), transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 w-full">
@@ -59,7 +59,7 @@ export default function AboutHero() {
         </motion.span>
         <motion.h1
           custom={1} variants={heroTextReveal} initial="hidden" animate="visible"
-          className="font-serif font-semibold text-white mb-6"
+          className="font-serif font-semibold text-black mb-6"
           style={{ fontSize: 'clamp(2.75rem, 7vw, 5.5rem)', lineHeight: '1.05' }}
         >
           Meet{' '}
@@ -68,7 +68,7 @@ export default function AboutHero() {
         <motion.p
           custom={2} variants={heroTextReveal} initial="hidden" animate="visible"
           className="font-sans font-light max-w-xl"
-          style={{ fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', color: 'rgba(255,255,255,0.65)', lineHeight: '1.75' }}
+          style={{ fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', color: 'rgba(0,0,0,0.65)', lineHeight: '1.75' }}
         >
           Baker. Entrepreneur. Community champion. A woman who turned the hardest
           chapters of her life into the most beautiful creations, and built a luxury
