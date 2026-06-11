@@ -9,19 +9,19 @@
 /* ─── Brand CSS Custom Properties ───────────────────────────────── */
 :root {
   /* ----- Backgrounds (now white/very-light) ----- */
-  --cream:       #FFFFFF;
-  --cream-white:#FFFFFF;
-  --apricot:     #FFFFFF;
-  --peach:       #000000;
-  --blush:       #000000;
-  --petal:       #FFFFFF;
-  --golden:      #FFFFFF;
+  --cream:       #F8F4F0;
+  --cream-white:#FAF8F4;
+  --apricot:     #FDF7F2;
+  --peach:       #D4A373;
+  --blush:       #E8B4A0;
+  --petal:       #F5E6D3;
+  --golden:      #E8B4A0;
 
   /* ----- Text colours (now black/gray) ----- */
-  --text-primary:   #000000;
-  --text-secondary:#111111;
-  --text-muted:     #222222;
-  --text-light:     #333333;
+  --text-primary:   #1A1A1A;
+  --text-secondary:#333333;
+  --text-muted:     #555555;
+  --text-light:     #777777;
 
   /* ----- Shadows – keep them subtle so they don’t re‑introduce colour ----- */
   --shadow-luxury: 0 4px 12px rgba(0,0,0,0.08);

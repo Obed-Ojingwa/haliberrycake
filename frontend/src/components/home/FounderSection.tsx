@@ -21,7 +21,7 @@ export default function FounderSection() {
   const portraitUrl = useSiteImage('founder_portrait')
 
   return (
-    <section className="py-24 lg:py-36 overflow-hidden" style={{ background: 'white' }}>
+    <section className="py-8 lg:py-16 overflow-hidden" style={{ background: 'white' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 

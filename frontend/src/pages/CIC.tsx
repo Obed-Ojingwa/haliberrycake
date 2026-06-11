@@ -10,10 +10,10 @@ import CTABanner from '@/components/home/CTABanner'
 import WhatsAppFloatButton from '@/components/ui/WhatsAppFloatButton'
 
 const IMPACT = [
-  { icon:<Users size={22}/>,   value:'200+', label:'Women Supported' },
-  { icon:<BookOpen size={22}/>,value:'50+',  label:'Classes Delivered' },
-  { icon:<Heart size={22}/>,   value:'12',   label:'Partner Charities' },
-  { icon:<Sparkles size={22}/>,value:'6yrs', label:'Years of Impact' },
+  { icon:<Users size={22}/>,   value:'200+', label:'Women Supported', description:'Through our baking and empowerment programmes' },
+  { icon:<BookOpen size={22}/>,value:'50+',  label:'Classes Delivered', description:'Free baking classes for women in need' },
+  { icon:<Heart size={22}/>,   value:'12',   label:'Partner Charities', description:'Organizations we collaborate with across London' },
+  { icon:<Sparkles size={22}/>,value:'6yrs', label:'Years of Impact', description:'Years of serving the London community' },
 ]
 
 export default function CIC() {
@@ -57,13 +57,16 @@ export default function CIC() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-6"
             variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once:true }}>
-            {IMPACT.map(({ icon, value, label })=>(
+            {IMPACT.map(({ icon, value, label, description })=>(
               <motion.div key={label} variants={fadeUp}
                 className="text-center rounded-2xl p-8 bg-white border border-gray-200">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{ background:'var(--apricot)', color:'var(--peach)' }}>{icon}</div>
                 <p className="font-serif font-bold mb-1" style={{ fontSize:'2.25rem', color:'var(--text-primary)' }}>{value}</p>
                 <p className="font-sans text-sm" style={{ color:'var(--text-muted)' }}>{label}</p>
+                <p className="font-sans text-xs" style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+                  {description}
+                </p>
               </motion.div>
             ))}
           </motion.div>

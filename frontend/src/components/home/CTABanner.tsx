@@ -7,7 +7,7 @@ import { fadeUp, staggerContainer } from '@/lib/animations'
 export default function CTABanner() {
   return (
     <section
-      className="py-20 lg:py-28 relative overflow-hidden bg-white border-b border-black/10"
+      className="py-8 lg:py-16 relative overflow-hidden bg-white border-b border-black/10"
     >
       {/* Decorative shapes */}
       <div

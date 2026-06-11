@@ -9,7 +9,7 @@ export default function WhatsAppFloatButton() {
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
       title="Chat with us on WhatsApp"
-      className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-[0_24px_45px_rgba(37,211,102,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#1ebe5a] focus:outline-none focus:ring-4 focus:ring-[#25d366]/30"
+      className="fixed bottom-8 right-6 z-50 md:bottom-10 inline-flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-[0_24px_45px_rgba(37,211,102,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#1ebe5a] focus:outline-none focus:ring-4 focus:ring-[#25d366]/30"
     >
       <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#25D366] shadow-sm">
         <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">

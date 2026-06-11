@@ -5,16 +5,16 @@ import { ArrowRight, Users, Heart, Sparkles, BookOpen } from 'lucide-react'
 import { fadeLeft, fadeRight, fadeUp, staggerContainer } from '@/lib/animations'
 
 const STATS = [
-  { icon: <Users size={22}/>, value: '200+', label: 'Women Supported' },
-  { icon: <BookOpen size={22}/>, value: '50+', label: 'Classes Delivered' },
-  { icon: <Heart size={22}/>, value: '12',   label: 'Partner Charities' },
-  { icon: <Sparkles size={22}/>, value: '6',  label: 'Years of Impact' },
+  { icon: <Users size={22}/>, value: '200+', label: 'Women Supported', description: 'Through our baking and empowerment programmes' },
+  { icon: <BookOpen size={22}/>, value: '50+', label: 'Classes Delivered', description: 'Free baking classes for women in need' },
+  { icon: <Heart size={22}/>, value: '12',   label: 'Partner Charities', description: 'Organizations we collaborate with across London' },
+  { icon: <Sparkles size={22}/>, value: '6',  label: 'Years of Impact', description: 'Years of serving the London community' },
 ]
 
 export default function CICImpactSection() {
   return (
     <section
-      className="py-24 lg:py-36 overflow-hidden relative bg-white"
+      className="py-8 lg:py-16 overflow-hidden relative bg-white"
     >
       {/* Ambient orb */}
       <div
@@ -74,7 +74,7 @@ export default function CICImpactSection() {
             viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-2 gap-5"
           >
-            {STATS.map(({ icon, value, label }) => (
+            {STATS.map(({ icon, value, label, description }) => (
               <motion.div
                 key={label}
                 variants={fadeRight}
@@ -99,6 +99,9 @@ export default function CICImpactSection() {
                 </p>
                 <p className="font-sans text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
                   {label}
+                </p>
+                <p className="font-sans text-xs" style={{ color: 'rgba(255,255,255,0.4)', marginTop: '0.5rem' }}>
+                  {description}
                 </p>
               </motion.div>
             ))}

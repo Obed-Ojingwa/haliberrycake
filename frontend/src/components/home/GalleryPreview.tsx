@@ -35,7 +35,7 @@ export default function GalleryPreview() {
   const items: (GalleryItem | null)[] = [...raw, ...Array(Math.max(0, 5 - raw.length)).fill(null)]
 
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-8 lg:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
