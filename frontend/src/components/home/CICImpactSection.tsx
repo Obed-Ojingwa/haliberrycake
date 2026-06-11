@@ -41,7 +41,7 @@ export default function CICImpactSection() {
               className="font-serif font-semibold text-black"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: '1.1' }}
             >
-              Hiiiiiiiiiiiiiiiii
+              Healing &amp; Empowerment
               <br />
               <em className="not-italic" style={{ color: 'var(--peach)' }}>Healing & Empowerment</em>
             </motion.h2>
