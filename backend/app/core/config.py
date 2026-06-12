@@ -33,6 +33,7 @@ class Settings(BaseSettings):
             "http://localhost:3000",
             "https://haliberrycake.vercel.app",
             "https://haliberrycake.co.uk",
+            "https://haliberry-v1.vercel.app/",
             self.frontend_url.rstrip("/"),
             self.production_url.rstrip("/"),
         }
