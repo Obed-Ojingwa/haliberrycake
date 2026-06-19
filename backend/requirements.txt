@@ -48,3 +48,4 @@ supabase==2.15.2
 
 # Env
 python-dotenv==1.1.0
+fpdf==1.7.2

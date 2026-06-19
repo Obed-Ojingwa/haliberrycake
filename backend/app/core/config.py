@@ -26,44 +26,32 @@ class Settings(BaseSettings):
     frontend_url: str = "http://localhost:5173"
     production_url: str = "https://haliberrycake.co.uk"
 
+    # Email notification settings
+    email_smtp_host: Optional[str] = None
+    email_smtp_port: int = 587
+    email_smtp_user: Optional[str] = None
+    email_smtp_password: Optional[str] = None
+    email_from: Optional[str] = None
+    email_admin: Optional[str] = None
+    email_use_tls: bool = True
+
+    # SumUp payment settings
+    sumup_base_url: str = "https://api.sumup.com"
+    sumup_client_id: Optional[str] = None
+    sumup_client_secret: Optional[str] = None
+    sumup_pay_to_email: Optional[str] = None
+
     @property
     def cors_origins(self) -> list[str]:
-        """
-        Supports:
-        - single URL
-        - comma-separated URLs from Render env
-        - removes trailing slashes
-        - removes duplicates safely
-        """
-
-        raw = (
-            getattr(self, "frontend_url", "") or ""
-        )
-
-        # If Render provides multiple URLs via env override, handle it
-        env_raw = raw
-
-        origins = set()
-
-        # Add default trusted origins
-        defaults = [
+        origins = {
             "http://localhost:5173",
             "http://localhost:3000",
             "https://haliberrycake.vercel.app",
-            "https://haliberry-v1.vercel.app",
-            self.production_url,
-            self.frontend_url,
-        ]
-
-        for url in defaults:
-            if url:
-                origins.add(url.strip().rstrip("/"))
-
-        # Also support comma-separated env override if ever used
-        if env_raw and "," in env_raw:
-            for url in env_raw.split(","):
-                origins.add(url.strip().rstrip("/"))
-
+            "https://haliberrycake.co.uk",
+            "https://haliberry-v1.vercel.app/",
+            self.frontend_url.rstrip("/"),
+            self.production_url.rstrip("/"),
+        }
         return list(origins)
 
     @field_validator("database_url")
@@ -84,66 +72,6 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
-
-# # C:\Users\Melody\Documents\haliberrycake\backend\app\core\config.py
-# from pydantic_settings import BaseSettings
-# from pydantic import field_validator
-# from functools import lru_cache
-# from typing import Optional
-
-
-# class Settings(BaseSettings):
-#     app_name: str = "Haliberry Cake API"
-#     app_env: str = "development"
-#     debug: bool = False
-
-#     database_url: str
-#     secret_key: str
-
-#     supabase_url: Optional[str] = None
-#     supabase_anon_key: Optional[str] = None
-#     supabase_service_key: Optional[str] = None
-
-#     algorithm: str = "HS256"
-#     access_token_expire_minutes: int = 60
-
-#     admin_email: str = "admin@haliberrycake.co.uk"
-#     admin_password: str = "changeme"
-
-#     frontend_url: str = "http://localhost:5173"
-#     production_url: str = "https://haliberrycake.co.uk"
-
-#     @property
-#     def cors_origins(self) -> list[str]:
-#         origins = {
-#             "http://localhost:5173",
-#             "http://localhost:3000",
-#             "https://haliberrycake.vercel.app",
-#             "https://haliberrycake.co.uk",
-#             "https://haliberry-v1.vercel.app/",
-#             self.frontend_url.rstrip("/"),
-#             self.production_url.rstrip("/"),
-#         }
-#         return list(origins)
-
-#     @field_validator("database_url")
-#     @classmethod
-#     def validate_database_url(cls, v: str) -> str:
-#         if not v:
-#             raise ValueError("DATABASE_URL is required")
-#         if v.startswith("postgres://"):
-#             v = v.replace("postgres://", "postgresql://", 1)
-#         return v
-
-#     model_config = {"env_file": ".env", "extra": "ignore"}
-
-
-# @lru_cache
-# def get_settings() -> Settings:
-#     return Settings()  # type: ignore
-
-
-# settings = get_settings()
 
 # # C:\Users\Melody\Documents\haliberrycake\backend\app\core\config.py
 # from pydantic_settings import BaseSettings

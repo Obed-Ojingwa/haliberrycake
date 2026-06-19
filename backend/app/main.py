@@ -12,9 +12,8 @@ from slowapi.errors import RateLimitExceeded
 
 from app.core.config import settings
 from app.database.session import engine, Base
-from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic
-from app.api import site_settings 
- 
+from app.api import auth, products, cake_classes, gallery, testimonials, inquiries, cic, site_settings, orders
+
 
 # ── Logging ──────────────────────────────────────────────────────
 logging.basicConfig(
@@ -91,7 +90,8 @@ app.include_router(gallery.router,      prefix=API_PREFIX)
 app.include_router(testimonials.router, prefix=API_PREFIX)
 app.include_router(inquiries.router,    prefix=API_PREFIX)
 app.include_router(cic.router,          prefix=API_PREFIX)
-app.include_router(site_settings.router, prefix="/api/v1")
+app.include_router(site_settings.router, prefix=API_PREFIX)
+app.include_router(orders.router,       prefix=API_PREFIX)
 
 
 # ── Health check ─────────────────────────────────────────────────
