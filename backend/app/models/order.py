@@ -17,6 +17,8 @@ class Order(Base):
     total_amount: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default='pending', index=True)
     payment_method: Mapped[str] = mapped_column(String(50), nullable=False, default='sumup')
+    sumup_checkout_id: Mapped[str | None] = mapped_column(String(90), nullable=True, index=True)
+    sumup_transaction_id: Mapped[str | None] = mapped_column(String(90), nullable=True, index=True)
     sumup_checkout_url: Mapped[str | None] = mapped_column(String(500))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(

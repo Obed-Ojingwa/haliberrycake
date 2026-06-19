@@ -42,6 +42,8 @@ class OrderResponse(BaseModel):
     total_amount: float
     status: str
     payment_method: str
+    sumup_checkout_id: Optional[str] = None
+    sumup_transaction_id: Optional[str] = None
     sumup_checkout_url: Optional[str] = None
     created_at: datetime
     updated_at: datetime

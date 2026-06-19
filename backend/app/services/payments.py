@@ -1,4 +1,6 @@
 import time
+import hashlib
+import hmac
 from typing import Optional
 import httpx
 from app.core.config import settings
@@ -42,7 +44,7 @@ def _get_sumup_access_token() -> Optional[str]:
     return access_token
 
 
-def create_sumup_checkout(order: Order, success_url: str, cancel_url: str) -> Optional[str]:
+def create_sumup_checkout(order: Order, success_url: str, cancel_url: str) -> Optional[dict[str, str]]:
     access_token = _get_sumup_access_token()
     if not access_token:
         return None
@@ -68,4 +70,26 @@ def create_sumup_checkout(order: Order, success_url: str, cancel_url: str) -> Op
     response = httpx.post(checkout_url, json=payload, headers=headers, timeout=20)
     response.raise_for_status()
     result = response.json()
-    return result.get('checkout_url')
+
+    return {
+        'checkout_url': result.get('hosted_checkout_url') or result.get('checkout_url'),
+        'checkout_id': result.get('id'),
+    }
+
+
+def retrieve_sumup_checkout(checkout_id: str) -> Optional[dict[str, object]]:
+    access_token = _get_sumup_access_token()
+    if not access_token:
+        return None
+
+    checkout_url = f"{settings.sumup_base_url.rstrip('/')}/v1/checkouts/{checkout_id}"
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+    }
+
+    response = httpx.get(checkout_url, headers=headers, timeout=20)
+    if response.status_code == 404:
+        return None
+    response.raise_for_status()
+    return response.json()

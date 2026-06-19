@@ -11,6 +11,7 @@ router = APIRouter(prefix="/site-settings", tags=["Site Settings"])
 
 # All known setting keys — used to return a predictable dict to the frontend
 SETTING_KEYS = [
+    "brand_logo",
     "hero_background",
     "founder_portrait",
     "about_image_1",
@@ -21,6 +22,12 @@ SETTING_KEYS = [
 @router.get("", response_model=list[SiteSettingResponse])
 def get_site_settings(db: Session = Depends(get_db)):
     """Public endpoint — returns all site image settings."""
+    existing = {setting.key: setting for setting in db.query(SiteSetting).all()}
+    missing = [key for key in SETTING_KEYS if key not in existing]
+    if missing:
+        for key in missing:
+            db.add(SiteSetting(key=key))
+        db.commit()
     return db.query(SiteSetting).order_by(SiteSetting.key).all()
 
 
@@ -36,7 +43,9 @@ def update_site_setting(
         raise HTTPException(status_code=404, detail=f"Unknown setting key: {key}")
     setting = db.query(SiteSetting).filter(SiteSetting.key == key).first()
     if not setting:
-        raise HTTPException(status_code=404, detail="Setting not found")
+        setting = SiteSetting(key=key)
+        db.add(setting)
+
     for field, value in payload.model_dump(exclude_none=True).items():
         setattr(setting, field, value)
     db.commit()
