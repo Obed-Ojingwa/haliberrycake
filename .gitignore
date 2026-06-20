@@ -9,6 +9,7 @@ dist/
 *.tmp
 .idea/
 .vscode/
+backend/backend_config_changes.txt
 *.swp
 *.swo
 coverage/

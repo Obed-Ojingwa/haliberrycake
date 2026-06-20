@@ -40,7 +40,6 @@ class Settings(BaseSettings):
     sumup_public_key: Optional[str] = None
     sumup_secret_key: Optional[str] = None
     sumup_pay_to_email: Optional[str] = None
-    sumup_webhook_secret: Optional[str] = None
 
     @property
     def cors_origins(self) -> list[str]:

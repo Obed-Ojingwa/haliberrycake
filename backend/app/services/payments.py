@@ -22,9 +22,10 @@ def create_sumup_checkout(order: Order, success_url: str, cancel_url: str) -> Op
     checkout_url = f"{settings.sumup_base_url.rstrip('/')}/v1/checkouts"
     description = f'Order {order.id} — Haliberry Cake'
     payload = {
-        'amount': str(float(order.total_amount)),
+        'amount': str(order.total_amount),
         'currency': 'GBP',
         'checkout_reference': order.id,
+        'merchant_reference': order.id,
         'return_url': success_url,
         'cancel_url': cancel_url,
         'title': 'Haliberry Cake Order',
@@ -48,7 +49,7 @@ def retrieve_sumup_checkout(checkout_id: str) -> Optional[dict[str, object]]:
     if not _credentials_ready():
         return None
 
-    checkout_url = f"{settings.sumup_base_url.rstrip('/')}/v1/checkouts/{checkout_id}"
+    checkout_url = f"{settings.sumup_base_url.rstrip('/')}/v0.1/checkouts/{checkout_id}"
     headers = _sumup_headers()
 
     response = httpx.get(checkout_url, headers=headers, timeout=20)
