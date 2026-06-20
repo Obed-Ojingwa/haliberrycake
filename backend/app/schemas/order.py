@@ -45,6 +45,7 @@ class OrderResponse(BaseModel):
     sumup_checkout_id: Optional[str] = None
     sumup_transaction_id: Optional[str] = None
     sumup_checkout_url: Optional[str] = None
+    paid_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
     items: list[OrderItemResponse]
@@ -53,7 +54,11 @@ class OrderResponse(BaseModel):
 
 
 class OrderStatusUpdate(BaseModel):
-    status: Literal['pending', 'paid', 'processing', 'completed', 'cancelled']
+    status: Literal['pending', 'pending_payment', 'paid', 'failed', 'cancelled', 'processing', 'completed']
+
+
+class OrderPaymentVerifyRequest(BaseModel):
+    checkout_id: str
 
 
 class OrderCheckoutResponse(BaseModel):

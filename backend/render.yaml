@@ -44,5 +44,3 @@ services:
         sync: false
       - key: SUMUP_PAY_TO_EMAIL
         sync: false
-      - key: SUMUP_WEBHOOK_SECRET
-        sync: false

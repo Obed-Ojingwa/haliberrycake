@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
-import hashlib
-import hmac
 
 from app.database.session import get_db
 from app.models.order import Order, OrderItem
@@ -10,7 +10,7 @@ from app.models.product import Product
 from app.models.site_setting import SiteSetting
 from app.schemas.order import (
     OrderCreate, OrderResponse, OrderStatusUpdate,
-    OrderCheckoutResponse,
+    OrderCheckoutResponse, OrderPaymentVerifyRequest,
 )
 from app.core.auth import get_current_admin
 from app.services.payments import create_sumup_checkout, retrieve_sumup_checkout
@@ -24,15 +24,6 @@ router = APIRouter(prefix="/orders", tags=["Orders"])
 def _get_brand_logo_url(db: Session) -> Optional[str]:
     setting = db.query(SiteSetting).filter(SiteSetting.key == 'brand_logo').first()
     return setting.image_url if setting else None
-
-
-async def _verify_sumup_signature(request: Request, secret: str) -> bool:
-    raw_body = await request.body()
-    signature = request.headers.get('X-SumUp-Signature') or request.headers.get('X-Signature') or ''
-    if not signature:
-        return False
-    expected = hmac.new(secret.encode(), raw_body, hashlib.sha256).hexdigest()
-    return hmac.compare_digest(signature, expected)
 
 
 @router.post("", response_model=OrderCheckoutResponse, status_code=status.HTTP_201_CREATED)
@@ -51,15 +42,16 @@ def create_order(
         missing = set(product_ids) - set(product_map.keys())
         raise HTTPException(status_code=400, detail=f"Invalid product id(s): {', '.join(missing)}")
 
+    payment_method = payload.payment_method or 'sumup'
     order = Order(
         customer_name=payload.customer_name,
         email=payload.email,
         phone=payload.phone,
         delivery_date=payload.delivery_date,
         notes=payload.notes,
-        payment_method=payload.payment_method or 'sumup',
+        payment_method=payment_method,
         total_amount=0.0,
-        status='pending',
+        status='pending_payment' if payment_method == 'sumup' else 'pending',
     )
 
     total_amount = 0.0
@@ -81,7 +73,7 @@ def create_order(
 
     payment_url = None
     if order.payment_method == 'sumup':
-        success_url = f"{settings.frontend_url.rstrip('/')}/order-success?order_id={order.id}"
+        success_url = f"{settings.frontend_url.rstrip('/')}/payment-success?checkout_id={{checkout_id}}"
         cancel_url = f"{settings.frontend_url.rstrip('/')}/shop"
         checkout_data = create_sumup_checkout(order, success_url, cancel_url)
         if not checkout_data:
@@ -120,40 +112,51 @@ def create_order(
     )
 
 
-@router.post("/webhook", status_code=status.HTTP_204_NO_CONTENT)
-async def sumup_webhook(
-    request: Request,
-    db: Session = Depends(get_db),
-):
-    secret = settings.sumup_webhook_secret
-    if not secret:
-        raise HTTPException(status_code=403, detail="Webhook secret is not configured")
 
-    if not await _verify_sumup_signature(request, secret):
-        raise HTTPException(status_code=403, detail="Invalid webhook signature")
 
-    payload = await request.json()
-    checkout_id = payload.get('id') or payload.get('checkout_id')
-    if not checkout_id:
-        checkout = payload.get('checkout') or {}
-        checkout_id = checkout.get('id') or checkout.get('checkout_id')
+def _send_order_receipt(order: Order, db: Session) -> None:
+    logo_url = _get_brand_logo_url(db)
+    receipt_pdf = create_order_receipt(order, logo_url=logo_url)
 
-    if not checkout_id:
-        raise HTTPException(status_code=400, detail="Webhook payload missing checkout id")
+    if settings.email_admin:
+        send_order_notification(
+            order,
+            recipient=settings.email_admin,
+            subject=f"Paid Haliberry Cake order: {order.id}",
+            body=f"Order {order.id} has been paid. Total £{order.total_amount}",
+            attachment=receipt_pdf,
+        )
 
-    order = db.query(Order).filter(Order.sumup_checkout_id == checkout_id).first()
-    if not order:
-        # Attempt to locate by checkout reference if available
-        checkout_reference = payload.get('checkout_reference') or payload.get('checkoutReference')
-        if checkout_reference:
-            order = db.query(Order).filter(Order.id == checkout_reference).first()
+    send_order_notification(
+        order,
+        recipient=order.email,
+        subject="Your Haliberry Cake payment receipt",
+        body=f"Thank you for your payment, {order.customer_name}! Your order number is {order.id}.",
+        attachment=receipt_pdf,
+    )
 
-    if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
 
-    checkout_data = retrieve_sumup_checkout(checkout_id)
-    if not checkout_data:
-        raise HTTPException(status_code=400, detail="Unable to retrieve SumUp checkout")
+def _finalize_sumup_payment(order: Order, checkout_data: dict[str, object], db: Session) -> Order:
+    reference = str(checkout_data.get('checkout_reference') or checkout_data.get('merchant_reference') or '')
+    if reference and reference != order.id:
+        raise HTTPException(status_code=400, detail="Checkout reference does not match order")
+
+    amount_value = checkout_data.get('amount')
+    currency_value = None
+    if isinstance(amount_value, dict):
+        currency_value = amount_value.get('currency') or amount_value.get('currency_code')
+        amount_value = amount_value.get('amount') or amount_value.get('value')
+
+    if amount_value is not None:
+        try:
+            amount = float(amount_value)
+        except (TypeError, ValueError):
+            amount = None
+        if amount is not None and round(amount, 2) != round(float(order.total_amount), 2):
+            raise HTTPException(status_code=400, detail="Checkout amount does not match order total")
+
+    if currency_value is not None and str(currency_value).upper() != 'GBP':
+        raise HTTPException(status_code=400, detail="Checkout currency does not match order currency")
 
     state = str(checkout_data.get('state', '') or checkout_data.get('status', '') or '').upper()
     transaction_id = (
@@ -165,33 +168,39 @@ async def sumup_webhook(
     if isinstance(transaction_id, dict):
         transaction_id = transaction_id.get('id') or transaction_id.get('transaction_id')
 
-    if state == 'PAID' or state == 'COMPLETED':
+    if transaction_id:
+        order.sumup_transaction_id = str(transaction_id)
+
+    previous_status = order.status
+    if state in {'PAID', 'COMPLETED'}:
         order.status = 'paid'
-        if transaction_id:
-            order.sumup_transaction_id = str(transaction_id)
-        db.commit()
-        db.refresh(order)
+        if order.paid_at is None:
+            order.paid_at = datetime.now(timezone.utc)
+    elif state == 'CANCELLED':
+        order.status = 'cancelled'
+    elif state in {'FAILED', 'EXPIRED', 'DECLINED'}:
+        order.status = 'failed'
 
-        logo_url = _get_brand_logo_url(db)
-        receipt_pdf = create_order_receipt(order, logo_url=logo_url)
+    db.commit()
+    db.refresh(order)
 
-        if settings.email_admin:
-            send_order_notification(
-                order,
-                recipient=settings.email_admin,
-                subject=f"Paid Haliberry Cake order: {order.id}",
-                body=f"Order {order.id} has been paid. Total £{order.total_amount}",
-                attachment=receipt_pdf,
-            )
-        send_order_notification(
-            order,
-            recipient=order.email,
-            subject="Your Haliberry Cake payment receipt",
-            body=f"Thank you for your payment, {order.customer_name}! Your order number is {order.id}.",
-            attachment=receipt_pdf,
-        )
+    if order.status == 'paid' and previous_status != 'paid':
+        _send_order_receipt(order, db)
 
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return order
+
+
+@router.post("/verify-payment", response_model=OrderResponse)
+def verify_sumup_payment(payload: OrderPaymentVerifyRequest, db: Session = Depends(get_db)):
+    order = db.query(Order).filter(Order.sumup_checkout_id == payload.checkout_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    checkout_data = retrieve_sumup_checkout(payload.checkout_id)
+    if not checkout_data:
+        raise HTTPException(status_code=400, detail="Unable to retrieve SumUp checkout")
+
+    return _finalize_sumup_payment(order, checkout_data, db)
 
 
 @router.get("", response_model=List[OrderResponse])

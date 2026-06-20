@@ -20,6 +20,7 @@ class Order(Base):
     sumup_checkout_id: Mapped[str | None] = mapped_column(String(90), nullable=True, index=True)
     sumup_transaction_id: Mapped[str | None] = mapped_column(String(90), nullable=True, index=True)
     sumup_checkout_url: Mapped[str | None] = mapped_column(String(500))
+    paid_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
