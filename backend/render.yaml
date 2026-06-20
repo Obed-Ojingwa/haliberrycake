@@ -38,3 +38,11 @@ services:
         value: https://haliberrycake.co.uk
       - key: PRODUCTION_URL
         value: https://haliberrycake.co.uk
+      - key: SUMUP_PUBLIC_KEY
+        sync: false
+      - key: SUMUP_SECRET_KEY
+        sync: false
+      - key: SUMUP_PAY_TO_EMAIL
+        sync: false
+      - key: SUMUP_WEBHOOK_SECRET
+        sync: false

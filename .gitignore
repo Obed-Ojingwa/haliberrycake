@@ -25,3 +25,4 @@ backend/test_db.py
 .claude/
 backend/freshadmin.py
 backend/fix_password.py
+backend/backend_config_changes.txt

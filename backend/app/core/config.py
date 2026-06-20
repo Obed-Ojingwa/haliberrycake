@@ -37,8 +37,8 @@ class Settings(BaseSettings):
 
     # SumUp payment settings
     sumup_base_url: str = "https://api.sumup.com"
-    sumup_client_id: Optional[str] = None
-    sumup_client_secret: Optional[str] = None
+    sumup_public_key: Optional[str] = None
+    sumup_secret_key: Optional[str] = None
     sumup_pay_to_email: Optional[str] = None
     sumup_webhook_secret: Optional[str] = None
 
